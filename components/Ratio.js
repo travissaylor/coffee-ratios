@@ -1,15 +1,12 @@
 import React, { useContext} from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
-import { RatioContext } from './RatioContext';
 import { QuantityContext } from './QuantityContext';
 
 
 const Ratio = () => {
-    // const [ratio, setRatio] = useState(16);
 
     const handleRatioChange = (newRatio) => {
-        // ratioCtx.ratioChangeHandler(newRatio);
         if(isNaN(+newRatio)) {
             console.log('Not a Number');
             return;
@@ -29,7 +26,6 @@ const Ratio = () => {
         quantityCtx.decrementQuantityHandler('ratio', amount);
     }
 
-    const ratioCtx = useContext(RatioContext);    
     const quantityCtx = useContext(QuantityContext);
 
 

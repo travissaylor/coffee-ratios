@@ -27,12 +27,12 @@ class QuantityContextProvider extends React.Component {
         newQuantity = parseFloat(+newQuantity);
 
         if(isNaN(newQuantity) || !newQuantity || newQuantity <= 0) {
-            this.setState((prevState) => ({
+            this.setState({
                 grounds: 0,
                 water: 0,
                 brewedCoffee: 0,
                 ratio: 16
-            }));
+            });
             return;
         }
 
@@ -47,21 +47,21 @@ class QuantityContextProvider extends React.Component {
             this.setState((prevState) => ({
                 ...prevState,
                 grounds: newQuantity,
-                water: newQuantity*this.props.ratio,
-                brewedCoffee: newQuantity*this.props.ratio - 2*newQuantity
+                water: newQuantity*prevState.ratio,
+                brewedCoffee: newQuantity*prevState.ratio - 2*newQuantity
             }));
         } else if(element == 'water') {
             this.setState((prevState) => ({
                 ...prevState,
-                grounds: newQuantity/this.props.ratio,
+                grounds: newQuantity/prevState.ratio,
                 water: newQuantity,
-                brewedCoffee: newQuantity - 2*(newQuantity/this.props.ratio)
+                brewedCoffee: newQuantity - 2*(newQuantity/prevState.ratio)
             }));
         } else if(element == 'brewedCoffee') {
             this.setState((prevState) => ({
                 ...prevState,
-                grounds: newQuantity / (this.props.ratio - 2 ),
-                water: (2*this.props.ratio*newQuantity)/(2*this.props.ratio - 2),
+                grounds: newQuantity / (prevState.ratio - 2 ),
+                water: (2*prevState.ratio*newQuantity)/(2*prevState.ratio - 2),
                 brewedCoffee: newQuantity
             }));
         }
@@ -69,12 +69,10 @@ class QuantityContextProvider extends React.Component {
 
     incrementQuantityHandler(element, amount) {
         this.quantityChangeHandler(element, this.state[element] + amount);
-        // this.setState((prevState) => ({...prevState, [element]: prevState[element] + amount}))
     }
 
     decrementQuantityHandler(element, amount) {
         this.quantityChangeHandler(element, this.state[element] - amount);
-        // this.setState((prevState) => ({...prevState, [element]: (prevState[element] - amount > 0) ? prevState[element] - amount : 0}))
     }
 
     render() {
