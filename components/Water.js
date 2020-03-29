@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
+import QuantityInput from './ui/QuantityInput';
+import Unit from './ui/Unit';
+import QuantityTitle from './ui/QuantityTitle';
 
 const Water = () => {
     const quantityCtx = useContext(QuantityContext);
@@ -48,36 +51,31 @@ const Water = () => {
 
     return (
         <View style={style.quantityContainer}>
-            <Text style={style.headingText}>Water</Text>
+            <QuantityTitle>Water</QuantityTitle>
             <View style={style.quantity}>
                 <Button style={style.button} title="-" onPress={decrementQuantity}/>
-                <TextInput
-                    style={style.largeText}
-                    defaultValue={(unit == 'g') ? parseFloat(quantityCtx.water.toFixed(2)).toString() : parseFloat((quantityCtx.water/28.35).toFixed(2)).toString()}
+                <QuantityInput
+                    defaultValue={(unit == 'g') ? parseFloat(quantityCtx.water.toFixed(1)).toString() : parseFloat((quantityCtx.water/28.35).toFixed(1)).toString()}
                     keyboardType={'numeric'}
                     onChangeText={handleQuantityChange}
                     maxLength={(unit == 'g') ? 5 : 4}
                 />
-                <TouchableOpacity onPress={handleUnitChange}>
-                    <Text style={style.largeText}> {unit}</Text>
-                </TouchableOpacity>
                 <Button style={style.button} title="+" onPress={incrementQuantity}/>
             </View>
+            <Unit onPress={handleUnitChange} unit={unit}/>
         </View>
     );
 }
 
 const style = StyleSheet.create({
     quantityContainer: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingVertical: 10,
     },
     quantity: {
         flexDirection: "row",
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    largeText: {
-        fontSize: 50,
     },
     headingText: {
         textAlign: 'center',

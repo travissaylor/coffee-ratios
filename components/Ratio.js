@@ -31,7 +31,7 @@ const Ratio = () => {
 
     return (
         <View style={style.ratioContainer}>
-            <Text style={style.headingText}>Water to Coffee Ratio</Text>
+            <Text style={style.headingText}>Ratio</Text>
             <View style={style.ratio}>
                 <Button style={style.button} title="-" onPress={decrementQuantity}/>
                 <TextInput
@@ -50,7 +50,8 @@ const Ratio = () => {
 
 const style = StyleSheet.create({
     ratioContainer: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingVertical: 10,        
     },
     ratio: {
         flexDirection: "row",
@@ -61,7 +62,8 @@ const style = StyleSheet.create({
         fontSize: 50,
     },
     headingText: {
-        fontSize: 30
+        fontSize: 30,
+        textAlign: 'center',
     },
     button: {
         padding: 10,

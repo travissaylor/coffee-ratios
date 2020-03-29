@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
+import QuantityInput from './ui/QuantityInput';
+import Unit from './ui/Unit';
+import QuantityTitle from './ui/QuantityTitle';
 
 const Coffee = () => {
     const quantityCtx = useContext(QuantityContext);
@@ -48,40 +51,39 @@ const Coffee = () => {
 
     return (
         <View style={style.quantityContainer}>
-            <Text style={style.headingText}>Ground Coffee</Text>
+            <QuantityTitle style={style.headingText}>Coffee</QuantityTitle>
             <View style={style.quantity}>
                 <Button style={style.button} title="-" onPress={decrementQuantity}/>
-                <TextInput
-                    style={style.largeText}
-                    defaultValue={(unit == 'g') ? parseFloat(quantityCtx.grounds.toFixed(2)).toString() : parseFloat((quantityCtx.grounds/28.35).toFixed(2)).toString()}
-                    keyboardType={'numeric'}
+                <QuantityInput
+                    defaultValue={(unit == 'g') ? parseFloat(quantityCtx.grounds.toFixed(1)).toString() : parseFloat((quantityCtx.grounds/28.35).toFixed(1)).toString()}
+                    keyboardType={'decimal-pad'}
                     onChangeText={handleQuantityChange}
                     maxLength={(unit == 'g') ? 5 : 4}
+                    unit={unit}
                 />
-                <TouchableOpacity onPress={handleUnitChange}>
-                    <Text style={style.largeText}> {unit}</Text>
-                </TouchableOpacity>
                 <Button style={style.button} title="+" onPress={incrementQuantity}/>
             </View>
+            {/* <TouchableOpacity onPress={handleUnitChange}>
+                <Text style={style.unitText}>{(unit == 'g') ? 'grams' : 'ounces'}</Text>
+            </TouchableOpacity> */}
+            <Unit onPress={handleUnitChange} unit={unit} />
         </View>
     );
 }
 
 const style = StyleSheet.create({
     quantityContainer: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingVertical: 10,
     },
     quantity: {
         flexDirection: "row",
         justifyContent: 'center',
         alignItems: 'center',
     },
-    largeText: {
-        fontSize: 50,
-    },
     headingText: {
         textAlign: 'center',
-        fontSize: 30
+        fontSize: 20,
     },
     button: {
         padding: 10,
