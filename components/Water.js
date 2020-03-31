@@ -5,6 +5,8 @@ import { QuantityContext } from './QuantityContext';
 import QuantityInput from './ui/QuantityInput';
 import Unit from './ui/Unit';
 import QuantityTitle from './ui/QuantityTitle';
+import IncrementButton from './ui/IncrementButton';
+import DecrementButton from './ui/DecrementButton';
 
 const Water = () => {
     const quantityCtx = useContext(QuantityContext);
@@ -53,14 +55,14 @@ const Water = () => {
         <View style={style.quantityContainer}>
             <QuantityTitle>Water</QuantityTitle>
             <View style={style.quantity}>
-                <Button style={style.button} title="-" onPress={decrementQuantity}/>
+                <DecrementButton onPress={decrementQuantity}/>
                 <QuantityInput
                     defaultValue={(unit == 'g') ? parseFloat(quantityCtx.water.toFixed(1)).toString() : parseFloat((quantityCtx.water/28.35).toFixed(1)).toString()}
                     keyboardType={'numeric'}
                     onChangeText={handleQuantityChange}
                     maxLength={(unit == 'g') ? 5 : 4}
                 />
-                <Button style={style.button} title="+" onPress={incrementQuantity}/>
+                <IncrementButton onPress={incrementQuantity} />
             </View>
             <Unit onPress={handleUnitChange} unit={unit}/>
         </View>
@@ -70,12 +72,14 @@ const Water = () => {
 const style = StyleSheet.create({
     quantityContainer: {
         justifyContent: 'center',
+        alignItems: 'center',
         paddingVertical: 10,
     },
     quantity: {
         flexDirection: "row",
         justifyContent: 'center',
         alignItems: 'center',
+        // flex: 1,
     },
     headingText: {
         textAlign: 'center',

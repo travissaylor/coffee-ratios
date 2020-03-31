@@ -6,6 +6,10 @@ import QuantityInput from './ui/QuantityInput';
 import Unit from './ui/Unit';
 import QuantityTitle from './ui/QuantityTitle';
 
+import IncrementButton from './ui/IncrementButton';
+import DecrementButton from './ui/DecrementButton';
+ 
+
 const Brew = () => {
     const quantityCtx = useContext(QuantityContext);
     const [unit, setUnit] = useState('g');
@@ -53,14 +57,14 @@ const Brew = () => {
         <View style={style.quantityContainer}>
             <QuantityTitle>Brew</QuantityTitle>
             <View style={style.quantity}>
-                <Button style={style.button} title="-" onPress={decrementQuantity}/>
+                <DecrementButton onPress={decrementQuantity}/>
                 <QuantityInput
                     defaultValue={(unit == 'g') ? parseFloat(quantityCtx.brewedCoffee.toFixed(1)).toString() : parseFloat((quantityCtx.brewedCoffee/28.35).toFixed(1)).toString()}
                     keyboardType={'numeric'}
                     onChangeText={handleQuantityChange}
                     maxLength={(unit == 'g') ? 5 : 4}
                 />
-                <Button style={style.button} title="+" onPress={incrementQuantity}/>
+                <IncrementButton onPress={incrementQuantity} />
             </View>
             <Unit onPress={handleUnitChange} unit={unit}/>
         </View>

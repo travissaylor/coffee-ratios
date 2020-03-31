@@ -2,9 +2,14 @@ import React, { useContext} from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
+import QuantityTitle from './ui/QuantityTitle';
+import IncrementButton from './ui/IncrementButton';
+import DecrementButton from './ui/DecrementButton';
+import { useTheme } from '../constants/theme';
 
 
 const Ratio = () => {
+    const { colors } = useTheme();
 
     const handleRatioChange = (newRatio) => {
         if(isNaN(+newRatio)) {
@@ -31,18 +36,22 @@ const Ratio = () => {
 
     return (
         <View style={style.ratioContainer}>
-            <Text style={style.headingText}>Ratio</Text>
+            <QuantityTitle>Ratio</QuantityTitle>
             <View style={style.ratio}>
-                <Button style={style.button} title="-" onPress={decrementQuantity}/>
-                <TextInput
-                    style={style.largeText}
-                    defaultValue={quantityCtx.ratio.toString()}
-                    underlineColorAndroid='transparent'
-                    keyboardType={'numeric'}
-                    onChangeText={handleRatioChange}
-                />
-                <Text style={style.largeText}>:1</Text>
-                <Button style={style.button} title="+" onPress={incrementQuantity}/>
+                {/* <Button style={style.button} title="-" onPress={decrementQuantity}/> */}
+                <DecrementButton onPress={decrementQuantity}/>
+                <View style={style.ratioInput}>
+                    <TextInput
+                        style={{...style.largeText, color: colors.largeInput}}
+                        defaultValue={quantityCtx.ratio.toString()}
+                        underlineColorAndroid='transparent'
+                        keyboardType={'numeric'}
+                        onChangeText={handleRatioChange}
+                    />
+                    <Text style={{...style.largeText, color: colors.largeInput}}>:1</Text>
+                </View>
+                {/* <Button style={style.button} title="+" onPress={incrementQuantity}/> */}
+                <IncrementButton onPress={incrementQuantity} />
             </View>
         </View>
     );
@@ -58,8 +67,16 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    ratioInput: {
+        marginHorizontal: 30,
+        flexDirection: "row",
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     largeText: {
         fontSize: 50,
+        textAlign: 'center',
+        fontFamily: 'montserrat-light',
     },
     headingText: {
         fontSize: 30,

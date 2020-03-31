@@ -1,7 +1,10 @@
 import React from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
+import { useTheme } from '../../constants/theme';
+
 const QuantityInput = (props) => {
+    const { colors } = useTheme();
 
     const { unit } = props;
 
@@ -12,7 +15,7 @@ const QuantityInput = (props) => {
 
     return (
         <TextInput
-            style={{...styles.largeText, ...props.styles}}
+            style={{...styles.largeText, ...props.styles, color: colors.largeInput}}
             defaultValue={props.defaultValue}
             keyboardType={(props.keyboardType) ? props.keyboardType : defaults.keyboardType}
             onChangeText={props.onChangeText}

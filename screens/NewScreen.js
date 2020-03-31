@@ -1,28 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 
-import Card from '../components/Card';
-import Colors from '../constants/colors';
-
 
 const NewScreen = props => {
     return (
         <View style={styles.screen}>
             <Text style={styles.title}>New Screen</Text>
-            <Card style={styles.inputContainer}>
-                <Text>Select a Number</Text>
-                <TextInput 
-                
-                />
-                <View style={styles.buttonContainer}>
-                    <View style={styles.button}>
-                        <Button title="Reset" color={Colors.primary}/>
-                    </View>
-                    <View style={styles.button}>
-                        <Button title="Confirm" color={Colors.accent}/>
-                    </View>
-                </View>
-            </Card>
         </View>
     )
 };
