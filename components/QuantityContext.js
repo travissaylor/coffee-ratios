@@ -27,11 +27,13 @@ class QuantityContextProvider extends React.Component {
         newQuantity = parseFloat(+newQuantity);
 
         if(isNaN(newQuantity) || !newQuantity || newQuantity <= 0) {
-            this.setState({
-                grounds: 0,
-                water: 0,
-                brewedCoffee: 0,
-                ratio: 16
+            this.setState((prevState) => {
+                return {
+                    grounds: 0,
+                    water: 0,
+                    brewedCoffee: 0,
+                    ratio: prevState.ratio
+                }
             });
             return;
         }
