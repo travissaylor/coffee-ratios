@@ -43,14 +43,16 @@ const TimerScreen = (props) => {
 
     return(
         <View style={{...styles.timerContainer, backgroundColor: colors.screenBackground}}>
-            <SmallQuantityCard />
-            <Text style={styles.largeText}>{`${min}:${sec}`}</Text>
-            <View style={styles.buttonContainer}>
-                <Button title={isActive ? "Stop" : "Start"} style={styles.button} color={isActive ? colors.buttonPrimary : colors.buttonSecondary} onPress={toggle}/>
-                <Button title="Reset" style={styles.button} color={colors.labelPrimary} onPress={reset}/>
-            </View>
-            <View style={styles.exitContainer}>
-                <Button title="Exit Timer" onPress={() => props.navigation.goBack()} style={styles.button} color={colors.buttonPrimary}/>
+            <SmallQuantityCard colors={colors}/>
+            <View style={{justifyContent: 'center', flex: 1}}>
+                <Text style={{...styles.largeText, color: colors.unitPrimary}}>{`${min}:${sec}`}</Text>
+                <View style={styles.buttonContainer}>
+                    <Button title={isActive ? "Stop" : "Start"} style={styles.button} color={isActive ? colors.buttonPrimary : colors.buttonSecondary} onPress={toggle}/>
+                    <Button title="Reset" style={styles.button} color={colors.labelPrimary} onPress={reset}/>
+                </View>
+                <View style={styles.exitContainer}>
+                    <Button title="Exit Timer" onPress={() => props.navigation.goBack()} style={styles.button} color={colors.buttonPrimary}/>
+                </View>
             </View>
         </View>
     )
@@ -60,10 +62,10 @@ const styles = StyleSheet.create({
     timerContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     },
     largeText: {
-        fontSize: 50,
+        fontSize: 70,
         textAlign: 'center',
         marginHorizontal: 30,
         fontFamily: 'montserrat-light',
@@ -75,14 +77,13 @@ const styles = StyleSheet.create({
     },
     button: {
         paddingVertical: 10,
-        width: '40%',
+
     },
     buttonContainer: {
         paddingVertical: 10,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        width: '60%'
     },
     exitContainer: {
         marginTop: 50

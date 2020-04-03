@@ -8,11 +8,10 @@ import Coffee from '../components/Coffee';
 import Water from '../components/Water';
 import Brew from '../components/Brew';
 import Timer from '../components/Timer';
-
 import { useTheme } from '../constants/theme';
 
 const CalculatorScreen = (props) => {
-  const { colors } = useTheme();
+  let { colors } = useTheme();
 
   const [isTimerMode, setIsTimerMode] = useState(false);
 
@@ -32,17 +31,13 @@ const CalculatorScreen = (props) => {
           <Coffee />
           <Water />
           <Brew />
-          <Button color={colors.buttonPrimary} title="Start Brewing" onPress={() => setIsTimerMode(true)} />
-          <Button color={colors.buttonPrimary} title="New Screen" onPress={() => props.navigation.navigate({routeName: 'Timer'})} />
+          {/* <Button color={colors.buttonPrimary} title="Start Brewing" onPress={() => setIsTimerMode(true)} /> */}
+          <Button color={colors.buttonPrimary} title="Start Brewing" onPress={() => props.navigation.navigate('Timer')} />
           <Timer visible={isTimerMode} cancelAction={cancelActionHandler} />
         </QuantityContextProvider>
       </KeyboardAwareScrollView>
     </TouchableWithoutFeedback>
   );
-}
-
-CalculatorScreen.navigationOptions = {
-  headerTitle: 'Brew Calculator',
 }
 
 const styles = StyleSheet.create({
