@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Ratio from '../components/Ratio';
@@ -31,9 +31,9 @@ const CalculatorScreen = (props) => {
           <Coffee />
           <Water />
           <Brew />
-          {/* <Button color={colors.buttonPrimary} title="Start Brewing" onPress={() => setIsTimerMode(true)} /> */}
-          <Button color={colors.buttonPrimary} title="Start Brewing" onPress={() => props.navigation.navigate('Timer')} />
-          <Timer visible={isTimerMode} cancelAction={cancelActionHandler} />
+          <View style={styles.brewButton}>
+            <Button color={colors.buttonPrimary} title="Start Brewing" onPress={() => props.navigation.navigate('Timer')} />
+          </View>
         </QuantityContextProvider>
       </KeyboardAwareScrollView>
     </TouchableWithoutFeedback>
@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  brewButton: {
+    marginTop: 30
   },
 });
 
