@@ -43,13 +43,19 @@ const Timer = ({visible, cancelAction}) => {
     return(
         <Modal visible={visible} animationType="slide">
             <View style={{...styles.timerContainer, backgroundColor: colors.screenBackground}}>
-                <View style={{justifyContent: 'center', flex: 1}}>
+                <View style={{justifyContent: 'center', flex: 1, width: '100%'}}>
                     <Text style={{...styles.largeText, color: colors.unitPrimary}}>{`${min}:${sec}`}</Text>
                     <View style={styles.buttonContainer}>
-                        <Button title={isActive ? "Stop" : "Start"} style={styles.button} color={isActive ? colors.buttonPrimary : colors.buttonSecondary} onPress={toggle}/>
-                        <Button title="Reset" style={styles.button} color={colors.labelPrimary} onPress={reset}/>
+                        <View style={styles.button}>
+                            <Button title={isActive ? "Stop" : "Start"} color={isActive ? colors.buttonPrimary : colors.buttonSecondary} onPress={toggle}/>
+                        </View>
+                        <View style={styles.button}>
+                            <Button title="Reset" color={colors.labelPrimary} onPress={reset}/>
+                        </View>
                     </View>
-                    <Button title="Exit Timer" onPress={cancelAction} style={styles.button} color={colors.buttonPrimary}/>
+                    <View style={styles.exitContainer}>
+                    <Button title="Exit Timer" onPress={cancelAction} color={colors.buttonPrimary}/>
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -74,17 +80,20 @@ const styles = StyleSheet.create({
         fontSize: 30
     },
     button: {
-        paddingVertical: 10,
+        marginVertical: 10,
+        marginHorizontal: 20,
+        width: '20%'
 
     },
     buttonContainer: {
         paddingVertical: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
     },
     exitContainer: {
-        marginTop: 50
+        marginTop: 50,
+        alignItems: 'center',
     }
 });
 
