@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -7,10 +7,17 @@ import QuantityContextProvider from '../components/QuantityContext';
 import Coffee from '../components/Coffee';
 import Water from '../components/Water';
 import Brew from '../components/Brew';
+import Timer from '../components/Timer';
 import { useTheme } from '../constants/theme';
 
 const CalculatorScreen = (props) => {
   let { colors } = useTheme();
+
+  const [isTimerMode, setIsTimerMode] = useState(false);
+
+  const cancelActionHandler = () => {
+    setIsTimerMode(false);
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
