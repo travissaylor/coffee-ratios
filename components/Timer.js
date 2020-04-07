@@ -11,7 +11,7 @@ const formatTime = (time) => {
     return { min: formatNumber(min), sec: formatNumber(sec) };
 }
 
-const Timer = ({visible, cancelAction}) => {
+const Timer = ({ visible, cancelAction }) => {
 
     const { colors } = useTheme();
 
@@ -22,11 +22,14 @@ const Timer = ({visible, cancelAction}) => {
     useEffect(() => {
         let interval = null;
         if (isActive) {
-          interval = setInterval(() => {
-            setSecs(secs => secs + 1);
-          }, 1000);
+            if (secs >= 3600) {
+                reset();
+            }
+            interval = setInterval(() => {
+                setSecs(secs => secs + 1);
+            }, 1000);
         } else if (!isActive && secs !== 0) {
-          clearInterval(interval);
+            clearInterval(interval);
         }
         return () => clearInterval(interval);
     }, [isActive, secs]);
@@ -40,21 +43,21 @@ const Timer = ({visible, cancelAction}) => {
         setIsActive(false);
     }
 
-    return(
+    return (
         <Modal visible={visible} animationType="slide">
-            <View style={{...styles.timerContainer, backgroundColor: colors.screenBackground}}>
-                <View style={{justifyContent: 'center', flex: 1, width: '100%'}}>
-                    <Text style={{...styles.largeText, color: colors.unitPrimary}}>{`${min}:${sec}`}</Text>
+            <View style={{ ...styles.timerContainer, backgroundColor: colors.screenBackground }}>
+                <View style={{ justifyContent: 'center', flex: 1, width: '100%' }}>
+                    <Text style={{ ...styles.largeText, color: colors.unitPrimary }}>{`${min}:${sec}`}</Text>
                     <View style={styles.buttonContainer}>
                         <View style={styles.button}>
-                            <Button title={isActive ? "Stop" : "Start"} color={isActive ? colors.buttonPrimary : colors.buttonSecondary} onPress={toggle}/>
+                            <Button title={isActive ? "Stop" : "Start"} color={isActive ? colors.buttonPrimary : colors.buttonSecondary} onPress={toggle} />
                         </View>
                         <View style={styles.button}>
-                            <Button title="Reset" color={colors.labelPrimary} onPress={reset}/>
+                            <Button title="Reset" color={colors.labelPrimary} onPress={reset} />
                         </View>
                     </View>
                     <View style={styles.exitContainer}>
-                    <Button title="Exit Timer" onPress={cancelAction} color={colors.buttonPrimary}/>
+                        <Button title="Exit Timer" onPress={cancelAction} color={colors.buttonPrimary} />
                     </View>
                 </View>
             </View>
