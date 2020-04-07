@@ -10,7 +10,7 @@ const DecrementButton = (props) => {
     return (
         <View style={styles.iconContainer}>
             <Ionicons
-                name='ios-remove-circle'
+                name='ios-remove-circle-outline'
                 size={32}
                 color={(props.color) ? props.color : colors.iconPrimary}
                 backgroundColor="black"

@@ -10,7 +10,7 @@ const IncrementButton = (props) => {
     return (
         <View style={styles.iconContainer}>
             <Ionicons
-                name='ios-add-circle-outline'
+                name='ios-add-circle'
                 size={32}
                 color={(props.color) ? props.color : colors.iconPrimary}
                 backgroundColor="black"
