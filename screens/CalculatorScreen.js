@@ -32,8 +32,9 @@ const CalculatorScreen = (props) => {
           <Water />
           <Brew />
           <View style={styles.brewButton}>
-            <Button color={colors.buttonPrimary} title="Start Brewing" onPress={() => props.navigation.navigate('Timer')} />
+            <Button color={colors.buttonPrimary} title="Start Brewing" onPress={() => setIsTimerMode(true)} />
           </View>
+          <Timer visible={isTimerMode} cancelAction={cancelActionHandler}/>
         </QuantityContextProvider>
       </KeyboardAwareScrollView>
     </TouchableWithoutFeedback>
