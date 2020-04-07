@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View, StatusBar } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Ratio from '../components/Ratio';
@@ -11,7 +11,7 @@ import Timer from '../components/Timer';
 import { useTheme } from '../constants/theme';
 
 const CalculatorScreen = (props) => {
-  let { colors } = useTheme();
+  let { colors, theme } = useTheme();
 
   const [isTimerMode, setIsTimerMode] = useState(false);
 
@@ -26,6 +26,7 @@ const CalculatorScreen = (props) => {
         enableOnAndroid={true}
         enableAutomaticScroll={true}
       >
+        <StatusBar barStyle={(theme == 'dark') ? "light-content" : "dark-content"} />
         <QuantityContextProvider>
           <Ratio />
           <Coffee />
