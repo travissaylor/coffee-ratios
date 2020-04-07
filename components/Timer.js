@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { View, Text, Modal, StyleSheet, Button } from 'react-native';
+import { useTheme } from '../constants/theme';
 
 const formatNumber = number => `0${number}`.slice(-2);
 
@@ -11,6 +12,8 @@ const formatTime = (time) => {
 }
 
 const Timer = ({visible, cancelAction}) => {
+
+    const { colors } = useTheme();
 
     const [secs, setSecs] = useState(0);
     const [isActive, setIsActive] = useState(false);
@@ -39,14 +42,15 @@ const Timer = ({visible, cancelAction}) => {
 
     return(
         <Modal visible={visible} animationType="slide">
-            <View style={styles.timerContainer}>
-                <Text style={styles.headingText}>Timer</Text>
-                <Text  style={styles.largeText}>{`${min}:${sec}`}</Text>
-                <View style={styles.buttonContainer}>
-                    <Button title={isActive ? "Stop" : "Start"} style={styles.button} onPress={toggle}/>
-                    <Button title="Reset" style={styles.button} onPress={reset}/>
+            <View style={{...styles.timerContainer, backgroundColor: colors.screenBackground}}>
+                <View style={{justifyContent: 'center', flex: 1}}>
+                    <Text style={{...styles.largeText, color: colors.unitPrimary}}>{`${min}:${sec}`}</Text>
+                    <View style={styles.buttonContainer}>
+                        <Button title={isActive ? "Stop" : "Start"} style={styles.button} color={isActive ? colors.buttonPrimary : colors.buttonSecondary} onPress={toggle}/>
+                        <Button title="Reset" style={styles.button} color={colors.labelPrimary} onPress={reset}/>
+                    </View>
+                    <Button title="Exit Timer" onPress={cancelAction} style={styles.button} color={colors.buttonPrimary}/>
                 </View>
-                <Button title="Exit Timer" onPress={cancelAction} style={styles.button} color="red"/>
             </View>
         </Modal>
     )
@@ -56,11 +60,14 @@ const styles = StyleSheet.create({
     timerContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     },
     largeText: {
-        paddingVertical: 10,
-        fontSize: 50,
+        fontSize: 70,
+        textAlign: 'center',
+        marginHorizontal: 30,
+        fontFamily: 'montserrat-light',
+        // fontWeight: '100'
     },
     headingText: {
         textAlign: 'center',
@@ -68,14 +75,16 @@ const styles = StyleSheet.create({
     },
     button: {
         paddingVertical: 10,
-        width: '40%',
+
     },
     buttonContainer: {
         paddingVertical: 10,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        width: '60%'
+    },
+    exitContainer: {
+        marginTop: 50
     }
 });
 
