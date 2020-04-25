@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, Modal, StyleSheet, Button } from 'react-native';
 
-import { useTheme } from '../constants/theme';
+import { ThemeContext } from '../components/ThemeContext';
 import SmallQuantityCard from '../components/ui/SmallQuantityCard';
 
 const formatNumber = number => `0${number}`.slice(-2);
@@ -14,7 +14,9 @@ const formatTime = (time) => {
 
 const TimerScreen = (props) => {
 
-    const { colors } = useTheme();
+    const themeCtx = useContext(ThemeContext);
+    const { colors } = themeCtx;
+
 
     const [secs, setSecs] = useState(0);
     const [isActive, setIsActive] = useState(false);

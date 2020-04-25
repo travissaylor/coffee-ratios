@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, StyleSheet} from 'react-native';
 
-import { useTheme } from '../../constants/theme';
+import { ThemeContext } from '../ThemeContext';
 
 const QuantityTitle = (props) => {
-    const { colors } = useTheme();
+
+    const themeCtx = useContext(ThemeContext);
+    const { colors } = themeCtx;
+
 
     return (
         <Text style={{...styles.headingText, color: colors.labelPrimary}}>{props.children}</Text>

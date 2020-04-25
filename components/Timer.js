@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-import { View, Text, Modal, StyleSheet, Button } from 'react-native';
-import { useTheme } from '../constants/theme';
+import { View, Text, Modal, StyleSheet, Button, Platform } from 'react-native';
+import { ThemeContext } from './ThemeContext';
 
 const formatNumber = number => `0${number}`.slice(-2);
 
@@ -13,7 +13,8 @@ const formatTime = (time) => {
 
 const Timer = ({ visible, cancelAction }) => {
 
-    const { colors } = useTheme();
+    const themeCtx = useContext(ThemeContext);
+    const { colors } = themeCtx;
 
     const [secs, setSecs] = useState(0);
     const [isActive, setIsActive] = useState(false);
@@ -53,11 +54,11 @@ const Timer = ({ visible, cancelAction }) => {
                             <Button title={isActive ? "Stop" : "Start"} color={isActive ? colors.buttonPrimary : colors.buttonSecondary} onPress={toggle} />
                         </View>
                         <View style={styles.button}>
-                            <Button title="Reset" color={colors.labelPrimary} onPress={reset} />
+                            <Button title="Reset" color={(Platform.OS === 'ios') ? colors.labelPrimary : '#808080'} onPress={reset} />
                         </View>
                     </View>
                     <View style={styles.exitContainer}>
-                        <Button title="Exit Timer" onPress={cancelAction} color={colors.buttonPrimary} />
+                        <Button title="Close Timer" onPress={cancelAction} color={colors.buttonPrimary} />
                     </View>
                 </View>
             </View>

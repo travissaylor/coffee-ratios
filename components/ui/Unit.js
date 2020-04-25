@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import { useTheme } from '../../constants/theme';
+import { ThemeContext } from '../ThemeContext';
 
 const Unit = (props) => {
+    const themeCtx = useContext(ThemeContext);
+    const { colors } = themeCtx;
 
-    const { colors } = useTheme();
     const { unit } = props;
 
     return (

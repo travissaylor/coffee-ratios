@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View, StatusBar } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -8,10 +8,12 @@ import Coffee from '../components/Coffee';
 import Water from '../components/Water';
 import Brew from '../components/Brew';
 import Timer from '../components/Timer';
-import { useTheme } from '../constants/theme';
+import { ThemeContext }  from '../components/ThemeContext';
 
 const CalculatorScreen = (props) => {
-  let { colors, theme } = useTheme();
+
+  const ThemeCtx = useContext(ThemeContext);
+  const { colors, theme } = ThemeCtx;
 
   const [isTimerMode, setIsTimerMode] = useState(false);
 
@@ -33,7 +35,7 @@ const CalculatorScreen = (props) => {
           <Water />
           <Brew />
           <View style={styles.brewButton}>
-            <Button color={colors.buttonPrimary} title="Start Brewing" onPress={() => setIsTimerMode(true)} />
+            <Button color={colors.buttonPrimary} title="Open Timer" onPress={() => setIsTimerMode(true)} />
           </View>
           <Timer visible={isTimerMode} cancelAction={cancelActionHandler}/>
         </QuantityContextProvider>

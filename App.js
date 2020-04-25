@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
+import { AppearanceProvider } from 'react-native-appearance'
+
 
 import MainStackNavigator from './navigation/MainStackNavigator';
+import MainDrawerNavigator from './navigation/MainDrawerNavigator';
+import ThemeContextProvider from './components/ThemeContext';
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -19,6 +23,11 @@ export default function App() {
   }
 
   return (
-    <MainStackNavigator />
+    // <MainStackNavigator />
+    <AppearanceProvider>
+      <ThemeContextProvider>
+        <MainDrawerNavigator />
+      </ThemeContextProvider>
+    </AppearanceProvider>
   );
 }

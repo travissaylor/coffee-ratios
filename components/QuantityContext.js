@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 
 export const QuantityContext = React.createContext({
     grounds: 0,

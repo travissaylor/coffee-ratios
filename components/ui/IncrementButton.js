@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { useTheme } from '../../constants/theme';
+import { ThemeContext } from '../ThemeContext';
 
 const IncrementButton = (props) => {
-    const { colors } = useTheme();
+    const themeCtx = useContext(ThemeContext);
+    const { colors } = themeCtx;
+
     
     return (
         <View style={styles.iconContainer}>

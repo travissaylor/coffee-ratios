@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
-import { useTheme } from '../../constants/theme';
-
+import { ThemeContext } from '../ThemeContext';
 const QuantityInput = (props) => {
-    const { colors } = useTheme();
+    
+    const themeCtx = useContext(ThemeContext);
+    const { colors } = themeCtx;
 
     const { unit } = props;
 

@@ -1,15 +1,16 @@
-import React, { useContext} from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
 import QuantityTitle from './ui/QuantityTitle';
 import IncrementButton from './ui/IncrementButton';
 import DecrementButton from './ui/DecrementButton';
-import { useTheme } from '../constants/theme';
+import { ThemeContext } from './ThemeContext';
 
 
 const Ratio = () => {
-    const { colors } = useTheme();
+    const themeCtx = useContext(ThemeContext);
+    const { colors } = themeCtx;
 
     const handleRatioChange = (newRatio) => {
         if(isNaN(+newRatio)) {
@@ -38,7 +39,6 @@ const Ratio = () => {
         <View style={style.ratioContainer}>
             <QuantityTitle>Ratio</QuantityTitle>
             <View style={style.ratio}>
-                {/* <Button style={style.button} title="-" onPress={decrementQuantity}/> */}
                 <DecrementButton onPress={decrementQuantity}/>
                 <View style={style.ratioInput}>
                     <TextInput
@@ -50,7 +50,6 @@ const Ratio = () => {
                     />
                     <Text style={{...style.largeText, color: colors.largeInput}}>:1</Text>
                 </View>
-                {/* <Button style={style.button} title="+" onPress={incrementQuantity}/> */}
                 <IncrementButton onPress={incrementQuantity} />
             </View>
         </View>
