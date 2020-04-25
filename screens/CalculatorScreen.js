@@ -28,7 +28,7 @@ const CalculatorScreen = (props) => {
         enableOnAndroid={true}
         enableAutomaticScroll={true}
       >
-        <StatusBar barStyle={(theme == 'dark') ? "light-content" : "dark-content"} />
+        <StatusBar backgroundColor={(theme == 'dark') ? colors.screenBackground : colors.screenBackground} barStyle={(theme == 'dark') ? "light-content" : "dark-content"} />
         <QuantityContextProvider>
           <Ratio />
           <Coffee />
