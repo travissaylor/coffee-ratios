@@ -10,7 +10,6 @@ import ThemeContextProvider from './components/ThemeContext';
 
 const fetchFonts = () => {
   return Font.loadAsync({
-    'sf-ultralight': require('./assets/fonts/SFNSDisplayCondensed-Ultralight.otf'),
     'montserrat-light': require('./assets/fonts/Montserrat-Light.ttf'),
   });
 }

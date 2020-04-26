@@ -16,13 +16,6 @@ const MainDrawerNavigator = () => {
     const ThemeCtx = useContext(ThemeContext);
     const { colors } = ThemeCtx;
 
-    const defaultOptions = {
-        headerStyle: {
-            backgroundColor: colors.screenBackground,
-        },
-        headerTintColor: colors.labelPrimary,
-    }
-
     return (
         <NavigationContainer>
             <MainDrawer.Navigator 
@@ -35,22 +28,25 @@ const MainDrawerNavigator = () => {
                 )}
                 drawerContentOptions={{
                     activeTintColor: colors.largeInput,
-                    inactiveTintColor: colors.labelPrimary
+                    inactiveTintColor: colors.labelPrimary,
+                    labelStyle: {
+                        fontFamily: 'montserrat-light',
+                        textTransform: 'uppercase',
+                        fontSize: 16,
+                    }
                 }}
             >
                 <MainDrawer.Screen 
                     name="Calculator" 
                     component={MainStackNavigator} 
                     options={{
-                        ...defaultOptions,
-                        headerTitle: 'Brew Calculator',
+                        headerTitle: 'Calculator',
                     }}
                 />
                 <MainDrawer.Screen 
                     name="Timer" 
                     component={TimerScreen} 
                     options={{
-                        ...defaultOptions,
                         headerTitle: 'Brew Timer',
                     }}
                 />
@@ -58,7 +54,6 @@ const MainDrawerNavigator = () => {
                     name="Detailed" 
                     component={NewScreen} 
                     options={{
-                        ...defaultOptions,
                         headerTitle: 'Details',
                     }}
                 />

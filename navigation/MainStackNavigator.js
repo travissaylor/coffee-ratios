@@ -22,7 +22,20 @@ const MainStackNavigator = (props) => {
         headerStyle: {
             backgroundColor: colors.screenBackground,
         },
+        headerTitleStyle: {
+            fontFamily: 'montserrat-light',
+            textTransform: 'uppercase',
+            fontSize: 20,
+        },
         headerTintColor: colors.labelPrimary,
+        headerLeft: () => (
+            <HamburgerButton
+              onPress={() => props.navigation.toggleDrawer()}
+            />
+        ),
+        headerRight: () => (
+            <ToggleThemeSwitch />
+        ),
     }
 
     return (
@@ -32,17 +45,7 @@ const MainStackNavigator = (props) => {
                 component={CalculatorScreen} 
                 options={{
                     ...defaultOptions,
-                    headerTitle: 'Brew Calculator',
-                    headerLeft: () => (
-                        <HamburgerButton
-                          onPress={() => props.navigation.toggleDrawer()}
-                        />
-                    ),
-                    headerRight: () => (
-                        <ToggleThemeSwitch
-                        //   onPress={() => toggleTheme()}
-                        />
-                    ),
+                    headerTitle: 'Calculator'
                 }}
             />
             <MainStack.Screen 

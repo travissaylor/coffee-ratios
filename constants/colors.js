@@ -1,13 +1,4 @@
 const palette = {
-    // primary: '#481380',
-    // primary: '#a1e6e3',
-    // accent: '#37586f',
-
-    // primary: '#222831',
-    // secondary: '#393e46',
-    // accent: '#00adb5',
-    // secondaryAccent: '#eeeeee',
-
     primary: '#08d9d6',
     secondary: '#252a34',
     accent: '#ff2e63',
