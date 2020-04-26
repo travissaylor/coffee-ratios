@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     moduleContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 20,
+        paddingBottom: 20,
     },
     largeText: {
         fontSize: 30,
