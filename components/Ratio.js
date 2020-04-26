@@ -18,7 +18,6 @@ const Ratio = () => {
             return;
         }
 
-        console.log('newQuantity', newRatio);
         quantityCtx.quantityChangeHandler('ratio', newRatio);
     }
 

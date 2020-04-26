@@ -21,7 +21,6 @@ const Water = () => {
         if(unit == 'oz') {
             newQuantity = newQuantity * 28.35;
         }
-        console.log('newQuantity', newQuantity);
         quantityCtx.quantityChangeHandler('water', newQuantity);
     }
 

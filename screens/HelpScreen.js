@@ -65,13 +65,13 @@ const styles = StyleSheet.create({
     largeText: {
         fontSize: 30,
         textAlign: 'center',
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         marginVertical: 15,
         fontFamily: 'montserrat-light',
     },
     bodyText: {
         fontSize: 16,
-        marginHorizontal: 20,
+        marginHorizontal: '7%',
         marginVertical: 10,
     }
 });
