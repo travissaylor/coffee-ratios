@@ -4,6 +4,7 @@ import { createDrawerNavigator, DrawerItemList, DrawerItem } from '@react-naviga
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { useColorScheme } from 'react-native-appearance';
 
+import HelpStackNavigator from '../navigation/HelpStackNavigator';
 import MainStackNavigator from '../navigation/MainStackNavigator';
 import CalculatorScreen from '../screens/CalculatorScreen';
 import TimerScreen from '../screens/TimerScreen';
@@ -44,10 +45,10 @@ const MainDrawerNavigator = () => {
                     }}
                 />
                 <MainDrawer.Screen 
-                    name="Timer" 
-                    component={TimerScreen} 
+                    name="Help" 
+                    component={HelpStackNavigator} 
                     options={{
-                        headerTitle: 'Brew Timer',
+                        headerTitle: 'Help',
                     }}
                 />
                 <MainDrawer.Screen 

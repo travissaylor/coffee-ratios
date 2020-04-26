@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View, StatusBar } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View, StatusBar, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Ratio from '../components/Ratio';
@@ -27,6 +27,8 @@ const CalculatorScreen = (props) => {
         contentContainerStyle={{...styles.container, backgroundColor: colors.screenBackground}} 
         enableOnAndroid={true}
         enableAutomaticScroll={true}
+        bounces={false}
+        extraScrollHeight={20}
       >
         <StatusBar backgroundColor={(theme == 'dark') ? colors.screenBackground : colors.screenBackground} barStyle={(theme == 'dark') ? "light-content" : "dark-content"} />
         <QuantityContextProvider>
@@ -46,7 +48,7 @@ const CalculatorScreen = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

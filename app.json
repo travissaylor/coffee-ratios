@@ -13,9 +13,9 @@
     "orientation": "portrait",
     "icon": "./assets/coffee-ratios-logo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/coffee-ratios-splash-transparent.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#252a34"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,15 +24,15 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.travissaylor.coffee_ratios",
+      "bundleIdentifier": "com.travissaylor.coffeeRatios",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.travissaylor.coffee_ratios",
+      "package": "com.travissaylor.coffeeRatios",
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/coffee-ratios-logo-transparent.png",
         "backgroundColor": "#252a34"
       },
       "permissions" : []

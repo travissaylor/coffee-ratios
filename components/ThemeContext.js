@@ -12,6 +12,7 @@ export const ThemeContext = React.createContext({
 const ThemeContextProvider = (props) => {
     var initialTheme = useColorScheme();
     const [theme, setTheme] = useState(initialTheme);
+    const [isEnabled, setIsEnabled] = useState((initialTheme == 'dark') ? true : false);
     var colors = theme ? themedColors[theme] : themedColors.default;
 
     useEffect(() => {
@@ -29,11 +30,12 @@ const ThemeContextProvider = (props) => {
             }
 
             return 'light';
-        })
+        });
+        setIsEnabled((prevState) => (!prevState));
     }
 
     return (
-        <ThemeContext.Provider value={{ theme, colors, toggleTheme }} >
+        <ThemeContext.Provider value={{ theme, colors, isEnabled, toggleTheme }} >
             {props.children}
         </ThemeContext.Provider>
     )
