@@ -1,14 +1,10 @@
 import React, { useContext } from 'react';
 import { View, Text, Button, SafeAreaView } from 'react-native';
 import { createDrawerNavigator, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { useColorScheme } from 'react-native-appearance';
+import { NavigationContainer } from '@react-navigation/native';
 
 import HelpStackNavigator from '../navigation/HelpStackNavigator';
 import MainStackNavigator from '../navigation/MainStackNavigator';
-import CalculatorScreen from '../screens/CalculatorScreen';
-import TimerScreen from '../screens/TimerScreen';
-import NewScreen from '../screens/NewScreen';
 import { ThemeContext } from '../components/ThemeContext';
 
 const MainDrawer = createDrawerNavigator();
@@ -23,6 +19,16 @@ const MainDrawerNavigator = () => {
                 drawerContent={(props) => (
                     <View style={{ flex: 1, paddingTop: 20, backgroundColor: colors.screenBackground, color: colors.labelPrimary }}>
                         <SafeAreaView forceInset={{ top: 'always', horizontal: 'never'}}>
+                        <DrawerItem 
+                            label={() => <View style={{flexDirection: "row"}}><Text style={{color: colors.largeInput,fontFamily: 'montserrat-light', textTransform: 'uppercase', fontSize: 30,}}>COFF</Text><Text style={{color: colors.labelPrimary,fontFamily: 'montserrat-light', textTransform: 'uppercase', fontSize: 30,}}>IO</Text></View>}
+                            labelStyle={{
+                                fontFamily: 'montserrat-light',
+                                textTransform: 'uppercase',
+                                fontSize: 20,
+                            }}
+                            activeTintColor={colors.largeInput}
+                            inactiveTintColor={colors.labelPrimary}
+                        />
                             <DrawerItemList {...props} />
                         </SafeAreaView>
                     </View>
@@ -49,13 +55,6 @@ const MainDrawerNavigator = () => {
                     component={HelpStackNavigator} 
                     options={{
                         headerTitle: 'Help',
-                    }}
-                />
-                <MainDrawer.Screen 
-                    name="Detailed" 
-                    component={NewScreen} 
-                    options={{
-                        headerTitle: 'Details',
                     }}
                 />
             </MainDrawer.Navigator>
