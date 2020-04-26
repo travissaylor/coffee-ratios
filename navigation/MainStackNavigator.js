@@ -23,6 +23,7 @@ const MainStackNavigator = (props) => {
             textTransform: 'uppercase',
             fontSize: 20,
         },
+        headerTitleAlign: 'center',
         headerTintColor: colors.labelPrimary,
         headerLeft: () => (
             <HamburgerButton
