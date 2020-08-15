@@ -937,6 +937,13 @@
   dependencies:
     lodash "^4.17.4"
 
+"@expo/vector-icons@^10.0.6":
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.1.0.tgz#3fb2517924b031c1b98f86fa51a2032a257759b0"
+  integrity sha512-6ikFslHORJgsb8wKeSgXYfZNNXsiTb3yQf5xaNyGUCYg4zqE7VchdhnH9yZKTI3Lu16jna52pHQZl+3jcOSAbQ==
+  dependencies:
+    lodash "^4.17.4"
+
 "@expo/websql@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@expo/websql/-/websql-1.0.1.tgz#fff0cf9c1baa1f70f9e1d658b7c39a420d9b10a9"
@@ -1142,6 +1149,14 @@
     query-string "^6.11.1"
     react-is "^16.13.0"
     use-subscription "^1.4.0"
+
+"@react-navigation/drawer@^5.5.0":
+  version "5.6.3"
+  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-5.6.3.tgz#295c01e10c16dde07d77b58cdbce25d06c438e33"
+  integrity sha512-GUNP5/okeuswt8ajSErLLsompgeDxvWVPke38vtJ/DlbRTj3UbRJgEAx/1Goamxhu23Dehn3G04OKNIxCe09mQ==
+  dependencies:
+    color "^3.1.2"
+    react-native-iphone-x-helper "^1.2.1"
 
 "@react-navigation/native@^5.1.4":
   version "5.1.4"

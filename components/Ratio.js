@@ -5,6 +5,7 @@ import { QuantityContext } from './QuantityContext';
 import QuantityTitle from './ui/QuantityTitle';
 import IncrementButton from './ui/IncrementButton';
 import DecrementButton from './ui/DecrementButton';
+import RatioStrength from './ui/RatioStrength';
 import { ThemeContext } from './ThemeContext';
 
 
@@ -51,6 +52,7 @@ const Ratio = () => {
                 </View>
                 <IncrementButton onPress={incrementQuantity} />
             </View>
+            <RatioStrength ratio={quantityCtx.ratio} />
         </View>
     );
 }
