@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View, StatusBar, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
 import Ratio from '../components/Ratio';
 import QuantityContextProvider from '../components/QuantityContext';
@@ -19,6 +20,12 @@ const CalculatorScreen = (props) => {
 
   const cancelActionHandler = () => {
     setIsTimerMode(false);
+    deactivateKeepAwake();
+  }
+
+  const updateTimerState = () => {
+    setIsTimerMode(true);
+    activateKeepAwake();
   }
 
   return (
@@ -37,7 +44,7 @@ const CalculatorScreen = (props) => {
           <Water />
           <Brew />
           <View style={styles.brewButton}>
-            <Button color={colors.buttonPrimary} title="Open Timer" onPress={() => setIsTimerMode(true)} />
+            <Button color={colors.buttonPrimary} title="Open Timer" onPress={updateTimerState} />
           </View>
           <Timer visible={isTimerMode} cancelAction={cancelActionHandler}/>
         </QuantityContextProvider>
