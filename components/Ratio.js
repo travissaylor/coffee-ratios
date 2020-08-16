@@ -42,7 +42,7 @@ const Ratio = () => {
                 <View style={style.ratioInput}>
                     <TextInput
                         style={{...style.largeText, color: colors.largeInput}}
-                        defaultValue={quantityCtx.ratio.toString()}
+                        defaultValue={parseFloat(quantityCtx.ratio.toFixed(1)).toString()}
                         underlineColorAndroid='transparent'
                         keyboardType={'numeric'}
                         onChangeText={handleRatioChange}

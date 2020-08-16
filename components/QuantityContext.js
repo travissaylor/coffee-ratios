@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { CalcClasses } from './calculations/QuantityCalc';
 
 export const QuantityContext = React.createContext({
     grounds: 0,
@@ -15,7 +16,8 @@ class QuantityContextProvider extends React.Component {
             grounds: 0,
             water: 0,
             brewedCoffee: 0,
-            ratio: 16
+            ratio: 16,
+            locked: 'brewedCoffee'
         }
 
         this.quantityChangeHandler = this.quantityChangeHandler.bind(this);
@@ -23,48 +25,41 @@ class QuantityContextProvider extends React.Component {
         this.decrementQuantityHandler = this.decrementQuantityHandler.bind(this);
     }
 
-    quantityChangeHandler(element, newQuantity) {
+    getFilteredQuantity(newQuantity) {
         newQuantity = parseFloat(+newQuantity);
 
         if(isNaN(newQuantity) || !newQuantity || newQuantity <= 0) {
-            this.setState((prevState) => ({
-                ...prevState,
-                grounds: 0,
-                water: 0,
-                brewedCoffee: 0,
-            }));
+            return false;
+        }
+
+        return newQuantity;
+    }
+
+    setDefaultState() {
+        this.setState((prevState) => ({
+            ...prevState,
+            ratio: 16,
+            grounds: 0,
+            water: 0,
+            brewedCoffee: 0,
+        }));
+    }
+
+    quantityChangeHandler(element, newValue) {
+        newValue = this.getFilteredQuantity(newValue);
+
+        if(newValue === false) {
+            this.setDefaultState();
             return;
         }
 
-        if(element == 'ratio') {
-            this.setState((prevState) => ({
-                ratio: newQuantity,
-                grounds: prevState.ratio/newQuantity*prevState.grounds,
-                water: prevState.ratio/newQuantity*prevState.water,
-                brewedCoffee: prevState.ratio/newQuantity*prevState.brewedCoffee
-            }));
-        } else if(element == 'grounds') {
-            this.setState((prevState) => ({
+        this.setState((prevState) => {
+            const CalcClass = new CalcClasses[element];
+            return {
                 ...prevState,
-                grounds: newQuantity,
-                water: newQuantity*prevState.ratio,
-                brewedCoffee: newQuantity*prevState.ratio - 2*newQuantity
-            }));
-        } else if(element == 'water') {
-            this.setState((prevState) => ({
-                ...prevState,
-                grounds: newQuantity/prevState.ratio,
-                water: newQuantity,
-                brewedCoffee: newQuantity - 2*(newQuantity/prevState.ratio)
-            }));
-        } else if(element == 'brewedCoffee') {
-            this.setState((prevState) => ({
-                ...prevState,
-                grounds: newQuantity / (prevState.ratio - 2 ),
-                water: (2*prevState.ratio*newQuantity)/(2*prevState.ratio - 2),
-                brewedCoffee: newQuantity
-            }));
-        }
+                ...CalcClass[this.state.locked + 'Locked'](newValue, prevState)
+            }
+        });
     }
 
     incrementQuantityHandler(element, amount) {
