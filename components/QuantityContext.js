@@ -17,12 +17,13 @@ class QuantityContextProvider extends React.Component {
             water: 0,
             brewedCoffee: 0,
             ratio: 16,
-            locked: 'brewedCoffee'
+            locked: 'ratio'
         }
 
         this.quantityChangeHandler = this.quantityChangeHandler.bind(this);
         this.incrementQuantityHandler = this.incrementQuantityHandler.bind(this);
         this.decrementQuantityHandler = this.decrementQuantityHandler.bind(this);
+        this.lockedQuantityHandler = this.lockedQuantityHandler.bind(this);
     }
 
     getFilteredQuantity(newQuantity) {
@@ -70,9 +71,15 @@ class QuantityContextProvider extends React.Component {
         this.quantityChangeHandler(element, this.state[element] - amount);
     }
 
+    lockedQuantityHandler(element) {
+        this.setState({
+            locked: element
+        });
+    }
+
     render() {
         return (
-            <QuantityContext.Provider value={{ratio: this.state.ratio, grounds: this.state.grounds, water: this.state.water, brewedCoffee: this.state.brewedCoffee, groundsChangeHandler: this.groundsChangeHandler, incrementQuantityHandler: this.incrementQuantityHandler, decrementQuantityHandler: this.decrementQuantityHandler, quantityChangeHandler: this.quantityChangeHandler}} >
+            <QuantityContext.Provider value={{ratio: this.state.ratio, grounds: this.state.grounds, water: this.state.water, brewedCoffee: this.state.brewedCoffee, locked: this.state.locked, incrementQuantityHandler: this.incrementQuantityHandler, decrementQuantityHandler: this.decrementQuantityHandler, quantityChangeHandler: this.quantityChangeHandler, lockedQuantityHandler: this.lockedQuantityHandler}} >
                 {this.props.children}
             </QuantityContext.Provider>
         )

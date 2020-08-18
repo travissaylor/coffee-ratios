@@ -1,16 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
+import { ThemeContext } from './ThemeContext';
 import QuantityInput from './ui/QuantityInput';
 import Unit from './ui/Unit';
-import QuantityTitle from './ui/QuantityTitle';
-import IncrementButton from './ui/IncrementButton';
-import DecrementButton from './ui/DecrementButton';
+import Card from './ui/Card';
 
 const Water = () => {
     const quantityCtx = useContext(QuantityContext);
+    const themeCtx = useContext(ThemeContext);
+
     const [unit, setUnit] = useState('g');
+    const { colors } = themeCtx;
 
 
     const handleQuantityChange = (newQuantity) => {
@@ -50,21 +52,32 @@ const Water = () => {
         });
     }
 
+    const handleLockedChange = () => {
+        quantityCtx.lockedQuantityHandler('water');
+    }
+
+    const isLocked = quantityCtx.locked === 'water';
+
     return (
-        <View style={style.quantityContainer}>
-            <QuantityTitle>Water</QuantityTitle>
-            <View style={style.quantity}>
-                <DecrementButton onPress={decrementQuantity}/>
+        <Card 
+            title="Water"
+            incrementQuantity={incrementQuantity}
+            decrementQuantity={decrementQuantity}
+            LargeInputComponent={
                 <QuantityInput
                     defaultValue={(unit == 'g') ? parseFloat(quantityCtx.water.toFixed(1)).toString() : parseFloat((quantityCtx.water/28.35).toFixed(1)).toString()}
                     keyboardType={'numeric'}
                     onChangeText={handleQuantityChange}
                     maxLength={(unit == 'g') ? 5 : 4}
+                    style={{color: isLocked ? colors.locked.largeInput : colors.largeInput}}
                 />
-                <IncrementButton onPress={incrementQuantity} />
-            </View>
-            <Unit onPress={handleUnitChange} unit={unit}/>
-        </View>
+            } 
+            BottomLabelComponent={
+                <Unit onPress={handleUnitChange} unit={unit} style={{color: isLocked ? colors.locked.unitPrimary : colors.unitPrimary}} />
+            }
+            locked={isLocked}
+            colors={colors}
+        />
     );
 }
 

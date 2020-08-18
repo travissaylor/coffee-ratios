@@ -29,15 +29,16 @@ const CalculatorScreen = (props) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <KeyboardAwareScrollView 
-        contentContainerStyle={{...styles.container, backgroundColor: colors.screenBackground}} 
-        enableOnAndroid={true}
-        enableAutomaticScroll={true}
-        bounces={false}
-        extraScrollHeight={20}
-      >
-        <StatusBar backgroundColor={(theme == 'dark') ? colors.screenBackground : colors.screenBackground} barStyle={(theme == 'dark') ? "light-content" : "dark-content"} />
+    <KeyboardAwareScrollView 
+      contentContainerStyle={{...styles.container, backgroundColor: colors.screenBackground}} 
+      enableOnAndroid={true}
+      enableAutomaticScroll={true}
+      bounces={false}
+      extraScrollHeight={20}
+      keyboardShouldPersistTaps='handled'
+    >
+      <StatusBar backgroundColor={(theme == 'dark') ? colors.screenBackground : colors.screenBackground} barStyle={(theme == 'dark') ? "light-content" : "dark-content"} />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>        
         <QuantityContextProvider>
           <Ratio />
           <Coffee />
@@ -48,8 +49,8 @@ const CalculatorScreen = (props) => {
           </View>
           <Timer visible={isTimerMode} cancelAction={cancelActionHandler}/>
         </QuantityContextProvider>
-      </KeyboardAwareScrollView>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 

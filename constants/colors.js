@@ -21,11 +21,27 @@ export const themedColors = {
     },
     dark: {
         ...colors,
+        locked: {
+            ...colors,
+            screenBackground: palette.accent,
+            largeInput: palette.secondary,
+            labelPrimary: palette.secondary,
+            unitPrimary: palette.secondary,
+            iconPrimary: palette.secondary,
+        }
     },
     light: {
         ...colors,
         screenBackground: 'white',
         labelPrimary: palette.secondary,
         unitPrimary: palette.secondary,
+        locked: {
+            ...colors,
+            screenBackground: palette.accent,
+            largeInput: palette.secondaryAccent,
+            labelPrimary: palette.secondaryAccent,
+            unitPrimary: palette.secondaryAccent,
+            iconPrimary: palette.secondaryAccent,
+        }
     }
 }

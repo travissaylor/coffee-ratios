@@ -21,7 +21,7 @@ const RatioStrength = (props) => {
 
     return (
         <View>
-            <Text style={{...style.unitText, ...props.style, color: colors.unitPrimary}}>{strength}</Text>
+            <Text style={{...style.unitText, color: colors.unitPrimary, ...props.style}}>{strength}</Text>
         </View>
     );
 }
