@@ -77,6 +77,7 @@ const Water = () => {
             }
             locked={isLocked}
             colors={colors}
+            lockHandler={handleLockedChange}
         />
     );
 }

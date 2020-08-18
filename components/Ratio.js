@@ -63,6 +63,7 @@ const Ratio = () => {
             }
             locked={quantityCtx.locked === 'ratio'}
             colors={colors}
+            lockHandler={handleLockedChange}
         />
     );
 }

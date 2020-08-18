@@ -78,6 +78,7 @@ const Brew = () => {
             }
             locked={isLocked}
             colors={colors}
+            lockHandler={handleLockedChange}
         />
     );
 }

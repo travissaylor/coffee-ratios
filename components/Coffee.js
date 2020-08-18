@@ -77,6 +77,7 @@ const Coffee = () => {
             }
             locked={isLocked}
             colors={colors}
+            lockHandler={handleLockedChange}
         />
     );
 }

@@ -1,15 +1,18 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import QuantityTitle from './QuantityTitle';
 import IncrementButton from './IncrementButton';
 import DecrementButton from './DecrementButton';
 
 
-const Card = ({title, incrementQuantity, decrementQuantity, LargeInputComponent, BottomLabelComponent, locked, colors}) => {
+const Card = ({title, incrementQuantity, decrementQuantity, LargeInputComponent, BottomLabelComponent, locked, colors, lockHandler}) => {
 
     return (
         <View style={{...style.quantityContainer, backgroundColor: locked ? colors.locked.screenBackground : colors.screenBackground}}>
-            <QuantityTitle style={{color: locked ? colors.locked.labelPrimary : colors.labelPrimary}}>{title}</QuantityTitle>
+            <TouchableOpacity onPress={lockHandler}>
+                <QuantityTitle style={{color: locked ? colors.locked.labelPrimary : colors.labelPrimary}}>{title}</QuantityTitle>
+            </TouchableOpacity>
             <View style={style.quantity}>
                 <DecrementButton onPress={decrementQuantity} color={locked ? colors.locked.iconPrimary : colors.iconPrimary} />
                 {LargeInputComponent}
