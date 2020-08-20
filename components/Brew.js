@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
@@ -11,7 +11,6 @@ const Brew = () => {
     const quantityCtx = useContext(QuantityContext);
     const themeCtx = useContext(ThemeContext);
 
-    const [unit, setUnit] = useState('g');
     const { colors } = themeCtx;
 
 
@@ -20,7 +19,7 @@ const Brew = () => {
             console.log('Not a Number');
             return;
         }
-        if(unit == 'oz') {
+        if(quantityCtx.brewedCoffeeUnit == 'oz') {
             newQuantity = newQuantity * 28.35;
         }
         quantityCtx.quantityChangeHandler('brewedCoffee', newQuantity);
@@ -28,7 +27,7 @@ const Brew = () => {
 
     const incrementQuantity = () => {
         var amount = 1;
-        if(unit == 'oz') {
+        if(quantityCtx.brewedCoffeeUnit == 'oz') {
             amount = 28.35;
         }
         quantityCtx.incrementQuantityHandler('brewedCoffee', amount);
@@ -36,20 +35,14 @@ const Brew = () => {
 
     const decrementQuantity = () => {
         var amount = 1;
-        if(unit == 'oz') {
+        if(quantityCtx.brewedCoffeeUnit == 'oz') {
             amount = 28.35;
         }
         quantityCtx.decrementQuantityHandler('brewedCoffee', amount);
     }
 
     const handleUnitChange = () => {
-        setUnit((prevUnit) => {
-            if(prevUnit == 'g') {
-                return 'oz';
-            } else {
-                return 'g';
-            }
-        });
+        quantityCtx.unitChangeHandler('brewedCoffeeUnit');
     }
 
     const handleLockedChange = () => {
@@ -65,16 +58,15 @@ const Brew = () => {
             decrementQuantity={decrementQuantity}
             LargeInputComponent={
                 <QuantityInput
-                    defaultValue={(unit == 'g') ? parseFloat(quantityCtx.brewedCoffee.toFixed(1)).toString() : parseFloat((quantityCtx.brewedCoffee/28.35).toFixed(1)).toString()}
+                    defaultValue={(quantityCtx.brewedCoffeeUnit == 'g') ? parseFloat(quantityCtx.brewedCoffee.toFixed(1)).toString() : parseFloat((quantityCtx.brewedCoffee/28.35).toFixed(1)).toString()}
                     keyboardType={'numeric'}
                     onChangeText={handleQuantityChange}
-                    maxLength={(unit == 'g') ? 5 : 4}
-                    unit={unit}
+                    maxLength={(quantityCtx.brewedCoffeeUnit == 'g') ? 5 : 4}
                     style={{color: isLocked ? colors.locked.largeInput : colors.largeInput}}
                 />
             } 
             BottomLabelComponent={
-                <Unit onPress={handleUnitChange} unit={unit} style={{color: isLocked ? colors.locked.unitPrimary : colors.unitPrimary}} />
+                <Unit onPress={handleUnitChange} unit={quantityCtx.brewedCoffeeUnit} style={{color: isLocked ? colors.locked.unitPrimary : colors.unitPrimary}} />
             }
             locked={isLocked}
             colors={colors}

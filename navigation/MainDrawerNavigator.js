@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import HelpStackNavigator from '../navigation/HelpStackNavigator';
 import MainStackNavigator from '../navigation/MainStackNavigator';
+import SettingStackNavigator from '../navigation/SettingStackNavigator';
+
 import { ThemeContext } from '../components/ThemeContext';
 
 const MainDrawer = createDrawerNavigator();
@@ -48,6 +50,13 @@ const MainDrawerNavigator = () => {
                     component={MainStackNavigator} 
                     options={{
                         headerTitle: 'Calculator',
+                    }}
+                />
+                <MainDrawer.Screen 
+                    name="Settings" 
+                    component={SettingStackNavigator} 
+                    options={{
+                        headerTitle: 'Settings',
                     }}
                 />
                 <MainDrawer.Screen 

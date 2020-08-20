@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
@@ -11,16 +11,14 @@ const Coffee = () => {
     const quantityCtx = useContext(QuantityContext);
     const themeCtx = useContext(ThemeContext);
 
-    const [unit, setUnit] = useState('g');
     const { colors } = themeCtx;
-
 
     const handleQuantityChange = (newQuantity) => {
         if(isNaN(+newQuantity)) {
             console.log('Not a Number');
             return;
         }
-        if(unit == 'oz') {
+        if(quantityCtx.groundsUnit == 'oz') {
             newQuantity = newQuantity * 28.35;
         }
         quantityCtx.quantityChangeHandler('grounds', newQuantity);
@@ -28,7 +26,7 @@ const Coffee = () => {
 
     const incrementQuantity = () => {
         var amount = 1;
-        if(unit == 'oz') {
+        if(quantityCtx.groundsUnit == 'oz') {
             amount = 28.35;
         }
         quantityCtx.incrementQuantityHandler('grounds', amount);
@@ -36,20 +34,14 @@ const Coffee = () => {
 
     const decrementQuantity = () => {
         var amount = 1;
-        if(unit == 'oz') {
+        if(quantityCtx.groundsUnit == 'oz') {
             amount = 28.35;
         }
         quantityCtx.decrementQuantityHandler('grounds', amount);
     }
 
     const handleUnitChange = () => {
-        setUnit((prevUnit) => {
-            if(prevUnit == 'g') {
-                return 'oz';
-            } else {
-                return 'g';
-            }
-        });
+        quantityCtx.unitChangeHandler('groundsUnit');
     }
 
     const handleLockedChange = () => {
@@ -65,15 +57,15 @@ const Coffee = () => {
             decrementQuantity={decrementQuantity}
             LargeInputComponent={
                 <QuantityInput
-                    defaultValue={(unit == 'g') ? parseFloat(quantityCtx.grounds.toFixed(1)).toString() : parseFloat((quantityCtx.grounds/28.35).toFixed(1)).toString()}
+                    defaultValue={(quantityCtx.groundsUnit == 'g') ? parseFloat(quantityCtx.grounds.toFixed(1)).toString() : parseFloat((quantityCtx.grounds/28.35).toFixed(1)).toString()}
                     keyboardType={'decimal-pad'}
                     onChangeText={handleQuantityChange}
-                    maxLength={(unit == 'g') ? 5 : 4}
+                    maxLength={(quantityCtx.groundsUnit == 'g') ? 5 : 4}
                     style={{color: isLocked ? colors.locked.largeInput : colors.largeInput}}
                 />
             } 
             BottomLabelComponent={
-                <Unit onPress={handleUnitChange} unit={unit} style={{color: isLocked ? colors.locked.unitPrimary : colors.unitPrimary}} />
+                <Unit onPress={handleUnitChange} unit={quantityCtx.groundsUnit} style={{color: isLocked ? colors.locked.unitPrimary : colors.unitPrimary}} />
             }
             locked={isLocked}
             colors={colors}

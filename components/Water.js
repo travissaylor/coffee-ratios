@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
@@ -10,17 +10,14 @@ import Card from './ui/Card';
 const Water = () => {
     const quantityCtx = useContext(QuantityContext);
     const themeCtx = useContext(ThemeContext);
-
-    const [unit, setUnit] = useState('g');
     const { colors } = themeCtx;
-
 
     const handleQuantityChange = (newQuantity) => {
         if(isNaN(+newQuantity)) {
             console.log('Not a Number');
             return;
         }
-        if(unit == 'oz') {
+        if(quantityCtx.waterUnit == 'oz') {
             newQuantity = newQuantity * 28.35;
         }
         quantityCtx.quantityChangeHandler('water', newQuantity);
@@ -28,7 +25,7 @@ const Water = () => {
 
     const incrementQuantity = () => {
         var amount = 1;
-        if(unit == 'oz') {
+        if(quantityCtx.waterUnit == 'oz') {
             amount = 28.35;
         }
         quantityCtx.incrementQuantityHandler('water', amount);
@@ -36,20 +33,15 @@ const Water = () => {
 
     const decrementQuantity = () => {
         var amount = 1;
-        if(unit == 'oz') {
+        if(quantityCtx.waterUnit == 'oz') {
             amount = 28.35;
         }
         quantityCtx.decrementQuantityHandler('water', amount);
     }
 
     const handleUnitChange = () => {
-        setUnit((prevUnit) => {
-            if(prevUnit == 'g') {
-                return 'oz';
-            } else {
-                return 'g';
-            }
-        });
+        quantityCtx.unitChangeHandler('waterUnit');
+        return;
     }
 
     const handleLockedChange = () => {
@@ -65,15 +57,15 @@ const Water = () => {
             decrementQuantity={decrementQuantity}
             LargeInputComponent={
                 <QuantityInput
-                    defaultValue={(unit == 'g') ? parseFloat(quantityCtx.water.toFixed(1)).toString() : parseFloat((quantityCtx.water/28.35).toFixed(1)).toString()}
+                    defaultValue={(quantityCtx.waterUnit == 'g') ? parseFloat(quantityCtx.water.toFixed(1)).toString() : parseFloat((quantityCtx.water/28.35).toFixed(1)).toString()}
                     keyboardType={'numeric'}
                     onChangeText={handleQuantityChange}
-                    maxLength={(unit == 'g') ? 5 : 4}
+                    maxLength={(quantityCtx.waterUnit == 'g') ? 5 : 4}
                     style={{color: isLocked ? colors.locked.largeInput : colors.largeInput}}
                 />
             } 
             BottomLabelComponent={
-                <Unit onPress={handleUnitChange} unit={unit} style={{color: isLocked ? colors.locked.unitPrimary : colors.unitPrimary}} />
+                <Unit onPress={handleUnitChange} unit={quantityCtx.waterUnit} style={{color: isLocked ? colors.locked.unitPrimary : colors.unitPrimary}} />
             }
             locked={isLocked}
             colors={colors}

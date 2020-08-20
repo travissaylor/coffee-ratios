@@ -5,26 +5,44 @@ export const QuantityContext = React.createContext({
     grounds: 0,
     water: 0,
     brewedCoffee: 0,
-    ratio: 16
+    ratio: 16,
+    groundsUnit: 'g',
+    waterUnit: 'g',
+    brewedCoffeeUnit: 'g',
+    locked: 'ratio'
 });
 
 class QuantityContextProvider extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log('props', props.defaultState);
         this.state = {
             grounds: 0,
             water: 0,
             brewedCoffee: 0,
             ratio: 16,
-            locked: 'ratio'
+            groundsUnit: 'g',
+            waterUnit: 'g',
+            brewedCoffeeUnit: 'g',
+            locked: 'ratio',
+            ...props.defaultState
         }
 
         this.quantityChangeHandler = this.quantityChangeHandler.bind(this);
         this.incrementQuantityHandler = this.incrementQuantityHandler.bind(this);
         this.decrementQuantityHandler = this.decrementQuantityHandler.bind(this);
         this.lockedQuantityHandler = this.lockedQuantityHandler.bind(this);
+        this.unitChangeHandler = this.unitChangeHandler.bind(this);
+        this.setStateObject = this.setStateObject.bind(this);
     }
+
+    // componentDidMount() {
+    //     this.setState((prevState) => ({
+    //         ...prevState,
+    //         ...this.props.defaultState
+    //     }))
+    // }
 
     getFilteredQuantity(newQuantity) {
         newQuantity = parseFloat(+newQuantity);
@@ -34,6 +52,13 @@ class QuantityContextProvider extends React.Component {
         }
 
         return newQuantity;
+    }
+
+    setStateObject(newState) {
+        this.setState((prevState) => ({
+            ...prevState,
+            ...newState
+        }));
     }
 
     setDefaultState() {
@@ -71,6 +96,13 @@ class QuantityContextProvider extends React.Component {
         this.quantityChangeHandler(element, this.state[element] - amount);
     }
 
+    unitChangeHandler(element) {
+        this.setState((prevState) => ({
+            ...prevState,
+            [element]: prevState[element] === 'g' ? 'oz' : 'g'
+        }))
+    }
+
     lockedQuantityHandler(element) {
         this.setState({
             locked: element
@@ -79,7 +111,7 @@ class QuantityContextProvider extends React.Component {
 
     render() {
         return (
-            <QuantityContext.Provider value={{ratio: this.state.ratio, grounds: this.state.grounds, water: this.state.water, brewedCoffee: this.state.brewedCoffee, locked: this.state.locked, incrementQuantityHandler: this.incrementQuantityHandler, decrementQuantityHandler: this.decrementQuantityHandler, quantityChangeHandler: this.quantityChangeHandler, lockedQuantityHandler: this.lockedQuantityHandler}} >
+            <QuantityContext.Provider value={{ratio: this.state.ratio, grounds: this.state.grounds, water: this.state.water, brewedCoffee: this.state.brewedCoffee, groundsUnit: this.state.groundsUnit, waterUnit: this.state.waterUnit, brewedCoffeeUnit: this.state.brewedCoffeeUnit, locked: this.state.locked, fullState: this.state, incrementQuantityHandler: this.incrementQuantityHandler, decrementQuantityHandler: this.decrementQuantityHandler, quantityChangeHandler: this.quantityChangeHandler, unitChangeHandler: this.unitChangeHandler, lockedQuantityHandler: this.lockedQuantityHandler, setStateObject: this.setStateObject}} >
                 {this.props.children}
             </QuantityContext.Provider>
         )

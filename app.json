@@ -3,7 +3,6 @@
     "name": "Coffio",
     "slug": "coffio",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
@@ -35,7 +34,7 @@
         "foregroundImage": "./assets/coffio-logo-dark-transparent.png",
         "backgroundColor": "#252a34"
       },
-      "permissions" : []
+      "permissions": []
     },
     "description": ""
   }
