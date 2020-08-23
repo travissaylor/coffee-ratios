@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { Appearance, useColorScheme } from 'react-native';
 import { themedColors } from '../constants/colors';
 import usePreferences from './hooks/usePreferences';
 
@@ -21,11 +21,10 @@ const ThemeContextProvider = (props) => {
     }, [])
 
     useEffect(() => {
-        if(defaultTheme.preferences === "system") {
-            setTheme(systemTheme);
-            setIsEnabled(systemTheme === "light" ? false : true)
+        if(defaultTheme.preferences === "system" || !defaultTheme.preferences) {
             return;
         }
+
         setTheme(defaultTheme.preferences || "light");
         setIsEnabled(defaultTheme.preferences === "dark" ? true : false)
 

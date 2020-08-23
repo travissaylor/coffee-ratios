@@ -43,8 +43,8 @@ const HelpScreen = (props) => {
                 </QuantityContextProvider>
             </View>
             <Text style={{ ...styles.largeText, color: colors.unitPrimary }}>Changing the Locked Quantity</Text>
-            <Text style={{...styles.bodyText, color: colors.unitPrimary }}>Locking a quantity allows you to change the other quantities without effecting the value of the locked quanity. To select the quantity you would like to like, tap the quantity name that is right above its numeric value. Try it below.</Text>
-            <View style={styles.moduleContainer}>
+            <Text style={{...styles.bodyText, color: colors.unitPrimary }}>Locking a quantity allows you to change the other quantities without affecting the value of the locked quantity. To select the quantity you would like to like, tap the quantity name that is right above its numeric value. Try it below.</Text>
+            <View style={{...styles.moduleContainer, marginTop: 10}}>
                 <QuantityContextProvider>
                     <Ratio />
                     <Coffee />

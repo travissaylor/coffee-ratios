@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import { ThemeContext } from "./ThemeContext";
-import { View, Text, StyleSheet, Button, Platform } from "react-native";
+import { View, StyleSheet, Button, Platform } from "react-native";
 
 
 const ThemePicker = (props) => {

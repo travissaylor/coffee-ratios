@@ -90,8 +90,7 @@ const SettingScreen = (props) => {
                                     ...styles.bodyText,
                                     color: colors.unitPrimary,
                                 }}>
-                                Set your desired startup values so you can quickly
-                                start brewing with the values you use the most
+                                Set your desired startup values so you can quickly start brewing with the values you use the most
                             </Text>
                         </View>
                         <View style={styles.moduleContainer}>
