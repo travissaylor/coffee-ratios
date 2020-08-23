@@ -13,6 +13,7 @@ const Ratio = () => {
     const { colors } = themeCtx;
 
     const handleRatioChange = (newRatio) => {
+        newRatio = newRatio.nativeEvent.text
         if(isNaN(+newRatio)) {
             console.log('Not a Number');
             return;

@@ -13,6 +13,7 @@ const Water = () => {
     const { colors } = themeCtx;
 
     const handleQuantityChange = (newQuantity) => {
+        newQuantity = newQuantity.nativeEvent.text;
         if(isNaN(+newQuantity)) {
             console.log('Not a Number');
             return;

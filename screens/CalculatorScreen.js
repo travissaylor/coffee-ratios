@@ -11,12 +11,7 @@ import Brew from '../components/Brew';
 import Timer from '../components/Timer';
 import { ThemeContext }  from '../components/ThemeContext';
 import usePreferences from '../components/hooks/usePreferences';
-
-const LoadingView = () => (
-  <View>
-      <Text>Loading...</Text>
-  </View>
-)
+import LoadingView from '../components/ui/LoadingView';
 
 const ErrorView = () => (
   <View>
@@ -56,7 +51,7 @@ const CalculatorScreen = (props) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>        
         <>
         { defaultPrefs.Loading &&
-            <LoadingView />
+            <LoadingView indicatorColor={colors.largeInput} text="Getting your settings" textStyle={{...styles.bodyText, color: colors.unitPrimary}} />
         }
 
         { defaultPrefs.error &&

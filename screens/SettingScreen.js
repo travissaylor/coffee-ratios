@@ -18,12 +18,9 @@ import Brew from "../components/Brew"
 import SaveHandler from "../components/SaveHandler"
 import usePreferences from "../components/hooks/usePreferences"
 import ThemePicker from "../components/ThemePicker"
+import LoadingView from "../components/ui/LoadingView"
 
-const LoadingView = () => (
-    <View>
-        <Text>Loading...</Text>
-    </View>
-)
+
 
 const ErrorView = () => (
     <View>
@@ -72,7 +69,7 @@ const SettingScreen = (props) => {
                 accessible={false}>
                 <>
                 { (prefData.loading || defaultTheme.loading) &&
-                    <LoadingView />
+                    <LoadingView indicatorColor={colors.largeInput} text="Getting your settings" textStyle={{...styles.bodyText, color: colors.unitPrimary}} />
                 }
 
                 { (prefData.error || defaultTheme.error) &&

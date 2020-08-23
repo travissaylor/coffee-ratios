@@ -19,7 +19,7 @@ const QuantityInput = (props) => {
             style={{...styles.largeText, color: colors.largeInput, ...props.style}}
             defaultValue={props.defaultValue}
             keyboardType={(props.keyboardType) ? props.keyboardType : defaults.keyboardType}
-            onChangeText={props.onChangeText}
+            onEndEditing={props.onChangeText}
             maxLength={(props.maxLength) ? props.maxLength : defaults.maxLength}
         />
     );

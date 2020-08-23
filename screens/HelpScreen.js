@@ -7,6 +7,9 @@ import { ThemeContext }  from '../components/ThemeContext';
 import HelpQuantity from '../components/HelpQuantity';
 import QuantityContextProvider from '../components/QuantityContext';
 import HelpCoffee from '../components/HelpCoffee';
+import Coffee from '../components/Coffee';
+import Water from '../components/Water';
+import Ratio from '../components/Ratio';
 
 const HelpScreen = (props) => {
 
@@ -38,6 +41,14 @@ const HelpScreen = (props) => {
             <View style={styles.moduleContainer}>
                 <QuantityContextProvider>
                     <HelpCoffee />
+                </QuantityContextProvider>
+            </View>
+            <Text style={{ ...styles.largeText, color: colors.unitPrimary }}>Changing the Locked Quantity</Text>
+            <Text style={{...styles.bodyText, color: colors.unitPrimary }}>Locking a quantity allows you to change the other quantities without effecting the value of the locked quanity. To select the quantity you would like to like, tap the quantity name that is right above its numeric value. Try it below.</Text>
+            <View style={styles.moduleContainer}>
+                <QuantityContextProvider>
+                    <Ratio />
+                    <Coffee />
                 </QuantityContextProvider>
             </View>
             <Text style={{ ...styles.largeText, color: colors.unitPrimary }}>Toggle Dark Mode</Text>
