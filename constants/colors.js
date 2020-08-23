@@ -3,6 +3,7 @@ const palette = {
     secondary: '#252a34',
     accent: '#ff2e63',
     secondaryAccent: '#eaeaea',
+    androidButtonDefault: '#808080',
 };
 
 export const colors = {
@@ -13,6 +14,7 @@ export const colors = {
     iconPrimary: palette.accent,
     labelPrimary: palette.secondaryAccent,
     unitPrimary: palette.secondaryAccent,
+    androidButtonDefault: palette.androidButtonDefault
 }
 
 export const themedColors = {

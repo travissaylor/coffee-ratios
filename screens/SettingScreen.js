@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react"
-import { ScrollView, TextInput } from "react-native-gesture-handler"
 import {
     StyleSheet,
     View,
@@ -7,62 +6,46 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
     StatusBar,
-    Button,
 } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import AsyncStorage from "@react-native-community/async-storage"
 
 import { ThemeContext } from "../components/ThemeContext"
-import QuantityInput from "../components/ui/QuantityInput"
-import IncrementButton from "../components/ui/IncrementButton"
-import DecrementButton from "../components/ui/DecrementButton"
-import Card, { BaseCard, StandardCard } from "../components/ui/Card"
 import Ratio from "../components/Ratio"
-import RatioStrength from "../components/ui/RatioStrength"
-import Unit from "../components/ui/Unit"
-import QuantityTitle from "../components/ui/QuantityTitle"
-import QuantityContextProvider, {
-    QuantityContext,
-} from "../components/QuantityContext"
+import QuantityContextProvider from "../components/QuantityContext"
 import Coffee from "../components/Coffee"
 import Water from "../components/Water"
 import Brew from "../components/Brew"
 import SaveHandler from "../components/SaveHandler"
+import usePreferences from "../components/hooks/usePreferences"
+import ThemePicker from "../components/ThemePicker"
+
+const LoadingView = () => (
+    <View>
+        <Text>Loading...</Text>
+    </View>
+)
+
+const ErrorView = () => (
+    <View>
+        <Text>There was a problem getting your data</Text>
+    </View>
+)
 
 const SettingScreen = (props) => {
     const themeCtx = useContext(ThemeContext)
-    const quantityCtx = useContext(QuantityContext)
     const { colors, theme } = themeCtx
 
-    const [defaults, setDefaults] = useState();
+    const [selectedTheme, setSelectedTheme] = useState("system");
 
+    const prefData = usePreferences('@Coffio_default_values');
+    const defaultTheme = usePreferences('@Coffio_default_theme');
 
     useEffect(() => {
-        const getDefaults = async () => {
-            const defaultVals = await getDefaultData("default_values")
-            if (defaultVals != null) {
-                // console.log(JSON.parse(defaultState));
-                // quantityCtx.setStateObject(JSON.parse(defaultState))
-                setDefaults(JSON.parse(defaultVals));
-            }
-        }
-        getDefaults()
-    }, [])
+        setSelectedTheme(defaultTheme.preferences || "system");
+    }, [defaultTheme.preferences])
 
-    const getDefaultData = async (storageKey) => {
-        try {
-            return await AsyncStorage.getItem(storageKey)
-        } catch (e) {
-            console.error(e)
-        }
-    }
-
-    console.log(defaults);
-
-    if(!defaults) {
-        return <View>
-            <Text>Loading...</Text>
-        </View>
+    const themeChangeHandler = (newTheme) => {
+        setSelectedTheme(newTheme);
     }
 
     return (
@@ -82,40 +65,77 @@ const SettingScreen = (props) => {
                         ? colors.screenBackground
                         : colors.screenBackground
                 }
-                barStyle={theme == "dark" ? "light-content" : "dark-content"}
+                barStyle={theme === "dark" ? "light-content" : "dark-content"}
             />
             <TouchableWithoutFeedback
                 onPress={Keyboard.dismiss}
                 accessible={false}>
-                <QuantityContextProvider defaultState={defaults}>
-                    <View style={styles.moduleContainer}>
-                        <Text
-                            style={{
-                                ...styles.largeText,
-                                color: colors.unitPrimary,
-                            }}>
-                            Default Startup Values
-                        </Text>
-                        <Text
-                            style={{
-                                ...styles.bodyText,
-                                color: colors.unitPrimary,
-                            }}>
-                            Set your desired startup values so you can quickly
-                            jump into your typical brewing workflow
-                        </Text>
-                    </View>
-                    <View style={styles.moduleContainer}>
-                        <Ratio />
-                        <Coffee />
-                        <Water />
-                        <Brew />
-                    </View>
-                    <View style={styles.moduleContainer}>
-                        <SaveHandler color={colors.largeInput} />
-                    </View>
-                    <View style={{ paddingBottom: 100 }}></View>
-                </QuantityContextProvider>
+                <>
+                { (prefData.loading || defaultTheme.loading) &&
+                    <LoadingView />
+                }
+
+                { (prefData.error || defaultTheme.error) &&
+                    <ErrorView />
+                }
+                { !(prefData.loading || defaultTheme.loading) && !(prefData.error || defaultTheme.error) &&
+                    <QuantityContextProvider defaultState={prefData.preferences}>
+                        <View style={styles.moduleContainer}>
+                            <Text
+                                style={{
+                                    ...styles.largeText,
+                                    color: colors.unitPrimary,
+                                }}>
+                                Default Startup Values
+                            </Text>
+                            <Text
+                                style={{
+                                    ...styles.bodyText,
+                                    color: colors.unitPrimary,
+                                }}>
+                                Set your desired startup values so you can quickly
+                                start brewing with the values you use the most
+                            </Text>
+                        </View>
+                        <View style={styles.moduleContainer}>
+                            <Ratio />
+                            <Coffee />
+                            <Water />
+                            <Brew />
+                        </View>
+                        <View style={{...styles.moduleContainer, paddingTop: 20}}>
+                            <Text
+                                style={{
+                                    ...styles.largeText,
+                                    color: colors.unitPrimary,
+                                }}>
+                                Startup Theme Preference
+                            </Text>
+                            <Text
+                                style={{
+                                    ...styles.bodyText,
+                                    color: colors.unitPrimary,
+                                }}>
+                                By default, Coffio will try to use your device's theme/dark mode preferences when starting the app. Here you can select a different default if you would like. You will always be able to toggle the theme with the switch in the top right of the header on each page.
+                            </Text>
+                        </View>
+                        <View style={styles.moduleContainer}>
+                            <ThemePicker selectedTheme={selectedTheme} themeChangeHandler={themeChangeHandler} />
+                        </View>
+                        <View style={styles.moduleContainer}>
+                            <Text
+                                style={{
+                                    ...styles.bodyText,
+                                    color: colors.unitPrimary,
+                                }}>
+                                * Not all devices have a native system theming/dark mode setting. If System Theme is selected as the default in these scenarios, Coffio will default to the light theme.
+                            </Text>
+                        </View>
+                        <SaveHandler selectedTheme={selectedTheme} color={colors.largeInput} />
+                        <View style={{ paddingBottom: 50 }}></View>
+                    </QuantityContextProvider>
+                }
+                </>
             </TouchableWithoutFeedback>
         </KeyboardAwareScrollView>
     )

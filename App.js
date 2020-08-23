@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
-import { AppearanceProvider } from 'react-native-appearance'
 
 
 import MainStackNavigator from './navigation/MainStackNavigator';
@@ -23,10 +22,8 @@ export default function App() {
 
   return (
     // <MainStackNavigator />
-    <AppearanceProvider>
       <ThemeContextProvider>
         <MainDrawerNavigator />
       </ThemeContextProvider>
-    </AppearanceProvider>
   );
 }

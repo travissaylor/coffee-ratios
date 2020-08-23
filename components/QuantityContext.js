@@ -16,7 +16,7 @@ class QuantityContextProvider extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log('props', props.defaultState);
+
         this.state = {
             grounds: 0,
             water: 0,
@@ -26,7 +26,7 @@ class QuantityContextProvider extends React.Component {
             waterUnit: 'g',
             brewedCoffeeUnit: 'g',
             locked: 'ratio',
-            ...props.defaultState
+            loading: true,
         }
 
         this.quantityChangeHandler = this.quantityChangeHandler.bind(this);
@@ -37,12 +37,20 @@ class QuantityContextProvider extends React.Component {
         this.setStateObject = this.setStateObject.bind(this);
     }
 
-    // componentDidMount() {
-    //     this.setState((prevState) => ({
-    //         ...prevState,
-    //         ...this.props.defaultState
-    //     }))
-    // }
+    componentDidMount() {
+        if(!this.props.defaultState) {
+            this.setState({
+                loading: false
+            });
+            return;
+        }
+
+        this.setState((prevState) => ({
+            ...prevState,
+            ...this.props.defaultState,
+            loading: false
+        }))
+    }
 
     getFilteredQuantity(newQuantity) {
         newQuantity = parseFloat(+newQuantity);

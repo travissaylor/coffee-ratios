@@ -10,11 +10,26 @@ import Water from '../components/Water';
 import Brew from '../components/Brew';
 import Timer from '../components/Timer';
 import { ThemeContext }  from '../components/ThemeContext';
+import usePreferences from '../components/hooks/usePreferences';
+
+const LoadingView = () => (
+  <View>
+      <Text>Loading...</Text>
+  </View>
+)
+
+const ErrorView = () => (
+  <View>
+      <Text>There was a problem getting your data</Text>
+  </View>
+)
 
 const CalculatorScreen = (props) => {
 
   const ThemeCtx = useContext(ThemeContext);
   const { colors, theme } = ThemeCtx;
+
+  const defaultPrefs = usePreferences('@Coffio_default_values');
 
   const [isTimerMode, setIsTimerMode] = useState(false);
 
@@ -39,16 +54,28 @@ const CalculatorScreen = (props) => {
     >
       <StatusBar backgroundColor={(theme == 'dark') ? colors.screenBackground : colors.screenBackground} barStyle={(theme == 'dark') ? "light-content" : "dark-content"} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>        
-        <QuantityContextProvider>
-          <Ratio />
-          <Coffee />
-          <Water />
-          <Brew />
-          <View style={styles.brewButton}>
-            <Button color={colors.buttonPrimary} title="Open Timer" onPress={updateTimerState} />
-          </View>
-          <Timer visible={isTimerMode} cancelAction={cancelActionHandler}/>
-        </QuantityContextProvider>
+        <>
+        { defaultPrefs.Loading &&
+            <LoadingView />
+        }
+
+        { defaultPrefs.error &&
+            <ErrorView />
+        }
+        { !defaultPrefs.loading && !defaultPrefs.error &&
+          <QuantityContextProvider defaultState={defaultPrefs.preferences}>
+            <Ratio />
+            <Coffee />
+            <Water />
+            <Brew />
+            <View style={styles.brewButton}>
+              <Button color={colors.buttonPrimary} title="Open Timer" onPress={updateTimerState} />
+            </View>
+            <Timer visible={isTimerMode} cancelAction={cancelActionHandler}/>
+          </QuantityContextProvider>
+        }
+        <View style={{height: 50}}></View>
+        </>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
   );
@@ -59,6 +86,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 20
   },
   brewButton: {
     marginTop: 30
