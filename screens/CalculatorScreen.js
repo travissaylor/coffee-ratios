@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View, StatusBar, Platform } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, Keyboard, Button, View, StatusBar } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 

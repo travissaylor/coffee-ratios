@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Appearance, useColorScheme } from 'react-native';
+import { useColorScheme } from 'react-native';
 import { themedColors } from '../constants/colors';
 import usePreferences from './hooks/usePreferences';
 

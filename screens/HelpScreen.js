@@ -8,7 +8,6 @@ import HelpQuantity from '../components/HelpQuantity';
 import QuantityContextProvider from '../components/QuantityContext';
 import HelpCoffee from '../components/HelpCoffee';
 import Coffee from '../components/Coffee';
-import Water from '../components/Water';
 import Ratio from '../components/Ratio';
 
 const HelpScreen = (props) => {
