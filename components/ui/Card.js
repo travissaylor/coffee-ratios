@@ -1,55 +1,91 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import QuantityTitle from './QuantityTitle';
+import IncrementButton from './IncrementButton';
+import DecrementButton from './DecrementButton';
+import QuantityInput from './QuantityInput';
 
-import { QuantityContext } from '../QuantityContext';
 
-const Card = ({inputValue, unit, quantityChangeHandler}) => {
+const Card = ({title, incrementQuantity, decrementQuantity, LargeInputComponent, BottomLabelComponent, colors, lockHandler, locked = false}) => {
 
     return (
-        <View style={style.quantityContainer}>
-            <Text style={style.headingText}>COFFEE</Text>
-            <View style={style.quantity}>
-                <Button style={style.button} title="-" onPress={decrementQuantity}/>
-                <TextInput
-                    style={style.largeText}
-                    defaultValue={(unit == 'g') ? parseFloat(quantityCtx.grounds.toFixed(1)).toString() : parseFloat((quantityCtx.grounds/28.35).toFixed(1)).toString()}
-                    keyboardType={'numeric'}
-                    onChangeText={handleQuantityChange}
-                    maxLength={(unit == 'g') ? 5 : 4}
-                />
-                <Button style={style.button} title="+" onPress={incrementQuantity}/>
-            </View>
-            <TouchableOpacity onPress={handleUnitChange}>
-                <Text style={style.unitText}>{(unit == 'g') ? 'grams' : 'ounces'}</Text>
+        <View style={{...style.quantityContainer, backgroundColor: locked ? colors.locked.screenBackground : colors.screenBackground}}>
+            <TouchableOpacity onPress={lockHandler}>
+                <QuantityTitle style={{color: locked ? colors.locked.labelPrimary : colors.labelPrimary}}>{title}</QuantityTitle>
             </TouchableOpacity>
+            <View style={style.quantity}>
+                <DecrementButton onPress={decrementQuantity} color={locked ? colors.locked.iconPrimary : colors.iconPrimary} />
+                {LargeInputComponent}
+                <IncrementButton onPress={incrementQuantity} color={locked ? colors.locked.iconPrimary : colors.iconPrimary} />
+            </View>
+            {BottomLabelComponent}
         </View>
     );
+}
+
+export const StandardCard = (props) => (
+    <BaseCard
+        titleComponent={
+            <QuantityTitle>{props.title}</QuantityTitle>
+        }
+        {...props}
+    >
+        <DecrementButton onPress={props.decrementHandler} />
+        <QuantityInput
+            style={{...style.largeInput, ...props.quantityStyle}}
+            defaultValue={props.quantityValue}
+            underlineColorAndroid='transparent'
+            keyboardType={'numeric'}
+            onChangeText={props.quantityHandler}
+        />
+        <IncrementButton onPress={props.incrementHandler}/>
+    </BaseCard>
+)
+
+export const BaseCard = (props) => {
+    return (
+        <View style={{...style.quantityContainer, ...props.style}}>
+            {props.titleComponent}
+            <View style={style.quantity}>
+                {props.children}
+            </View>
+            {props.BottomLabelComponent}
+        </View>
+    )
 }
 
 const style = StyleSheet.create({
     quantityContainer: {
         justifyContent: 'center',
-        paddingVertical: 10,
+        paddingVertical: 10,  
+        paddingHorizontal: 30,
+        borderRadius: 10,
     },
     quantity: {
         flexDirection: "row",
         justifyContent: 'center',
         alignItems: 'center',
     },
+    quantityInput: {
+        marginHorizontal: 30,
+        flexDirection: "row",
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     largeText: {
         fontSize: 50,
         textAlign: 'center',
-        marginHorizontal: 30,
         fontFamily: 'montserrat-light',
-        // fontWeight: '100'
     },
-    unitText: {
-        fontSize: 15,
+    largeText: {
+        fontSize: 50,
         textAlign: 'center',
+        fontFamily: 'montserrat-light',
     },
     headingText: {
+        fontSize: 30,
         textAlign: 'center',
-        fontSize: 20,
     },
     button: {
         padding: 10,

@@ -5,7 +5,7 @@ import { ThemeContext } from '../ThemeContext';
 
 const ThemeToggleSwitch = () => {
     const themeCtx = useContext(ThemeContext);
-    const { colors, isEnabled, toggleTheme } = themeCtx;
+    const { colors, theme, isEnabled, toggleTheme } = themeCtx;
 
     const toggleSwitch = () => {
         toggleTheme();

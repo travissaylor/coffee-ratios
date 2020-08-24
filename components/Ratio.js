@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
-import QuantityTitle from './ui/QuantityTitle';
-import IncrementButton from './ui/IncrementButton';
-import DecrementButton from './ui/DecrementButton';
 import RatioStrength from './ui/RatioStrength';
 import { ThemeContext } from './ThemeContext';
+import Card from './ui/Card';
+import QuantityInput  from './ui/QuantityInput';
 
 
 const Ratio = () => {
@@ -14,6 +13,7 @@ const Ratio = () => {
     const { colors } = themeCtx;
 
     const handleRatioChange = (newRatio) => {
+        newRatio = newRatio.nativeEvent.text
         if(isNaN(+newRatio)) {
             console.log('Not a Number');
             return;
@@ -33,34 +33,48 @@ const Ratio = () => {
     }
 
     const quantityCtx = useContext(QuantityContext);
+    
+    const handleLockedChange = () => {
+        quantityCtx.lockedQuantityHandler('ratio');
+    }
 
+    const isLocked = () => (
+        quantityCtx.locked === 'ratio'
+    )
 
     return (
-        <View style={style.ratioContainer}>
-            <QuantityTitle>Ratio</QuantityTitle>
-            <View style={style.ratio}>
-                <DecrementButton onPress={decrementQuantity}/>
+        <Card 
+            title="Ratio"
+            incrementQuantity={incrementQuantity}
+            decrementQuantity={decrementQuantity}
+            LargeInputComponent={
                 <View style={style.ratioInput}>
-                    <TextInput
-                        style={{...style.largeText, color: colors.largeInput}}
-                        defaultValue={quantityCtx.ratio.toString()}
+                    <QuantityInput
+                        style={{...style.largeText, marginHorizontal: 0, color: isLocked() ? colors.locked.largeInput : colors.largeInput}}
+                        defaultValue={parseFloat(quantityCtx.ratio.toFixed(1)).toString()}
                         underlineColorAndroid='transparent'
                         keyboardType={'numeric'}
                         onChangeText={handleRatioChange}
                     />
-                    <Text style={{...style.largeText, color: colors.largeInput}}>:1</Text>
+                    <Text style={{...style.largeText, color: isLocked() ? colors.locked.largeInput : colors.largeInput}}>:1</Text>
                 </View>
-                <IncrementButton onPress={incrementQuantity} />
-            </View>
-            <RatioStrength ratio={quantityCtx.ratio} />
-        </View>
+            } 
+            BottomLabelComponent={
+                <RatioStrength style={{color: isLocked() ? colors.locked.unitPrimary : colors.unitPrimary}} ratio={quantityCtx.ratio} />
+            }
+            locked={quantityCtx.locked === 'ratio'}
+            colors={colors}
+            lockHandler={handleLockedChange}
+        />
     );
 }
 
 const style = StyleSheet.create({
     ratioContainer: {
         justifyContent: 'center',
-        paddingVertical: 10,        
+        paddingVertical: 10,  
+        paddingHorizontal: 30,
+        borderRadius: 10,    
     },
     ratio: {
         flexDirection: "row",

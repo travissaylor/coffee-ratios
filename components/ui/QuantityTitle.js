@@ -10,7 +10,7 @@ const QuantityTitle = (props) => {
 
 
     return (
-        <Text style={{...styles.headingText, color: colors.labelPrimary}}>{props.children}</Text>
+        <Text style={{...styles.headingText, color: colors.labelPrimary, ...props.style}}>{props.children}</Text>
     )
 }
 

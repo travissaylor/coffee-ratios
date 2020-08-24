@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
 import { ThemeContext } from '../ThemeContext';
+
 const QuantityInput = (props) => {
-    
     const themeCtx = useContext(ThemeContext);
     const { colors } = themeCtx;
 
@@ -16,10 +16,10 @@ const QuantityInput = (props) => {
 
     return (
         <TextInput
-            style={{...styles.largeText, ...props.styles, color: colors.largeInput}}
+            style={{...styles.largeText, color: colors.largeInput, ...props.style}}
             defaultValue={props.defaultValue}
             keyboardType={(props.keyboardType) ? props.keyboardType : defaults.keyboardType}
-            onChangeText={props.onChangeText}
+            onEndEditing={props.onChangeText}
             maxLength={(props.maxLength) ? props.maxLength : defaults.maxLength}
         />
     );
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: 30,
         fontFamily: 'montserrat-light',
-        // fontWeight: '100'
     }
 });
 

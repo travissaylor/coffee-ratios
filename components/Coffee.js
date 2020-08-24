@@ -1,24 +1,25 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import { StyleSheet } from 'react-native';
 
 import { QuantityContext } from './QuantityContext';
+import { ThemeContext } from './ThemeContext';
 import QuantityInput from './ui/QuantityInput';
 import Unit from './ui/Unit';
-import QuantityTitle from './ui/QuantityTitle';
-import IncrementButton from './ui/IncrementButton';
-import DecrementButton from './ui/DecrementButton';
+import Card from './ui/Card';
 
 const Coffee = () => {
     const quantityCtx = useContext(QuantityContext);
-    const [unit, setUnit] = useState('g');
+    const themeCtx = useContext(ThemeContext);
 
+    const { colors } = themeCtx;
 
     const handleQuantityChange = (newQuantity) => {
+        newQuantity = newQuantity.nativeEvent.text;
         if(isNaN(+newQuantity)) {
             console.log('Not a Number');
             return;
         }
-        if(unit == 'oz') {
+        if(quantityCtx.groundsUnit == 'oz') {
             newQuantity = newQuantity * 28.35;
         }
         quantityCtx.quantityChangeHandler('grounds', newQuantity);
@@ -26,7 +27,7 @@ const Coffee = () => {
 
     const incrementQuantity = () => {
         var amount = 1;
-        if(unit == 'oz') {
+        if(quantityCtx.groundsUnit == 'oz') {
             amount = 28.35;
         }
         quantityCtx.incrementQuantityHandler('grounds', amount);
@@ -34,41 +35,43 @@ const Coffee = () => {
 
     const decrementQuantity = () => {
         var amount = 1;
-        if(unit == 'oz') {
+        if(quantityCtx.groundsUnit == 'oz') {
             amount = 28.35;
         }
         quantityCtx.decrementQuantityHandler('grounds', amount);
     }
 
     const handleUnitChange = () => {
-        setUnit((prevUnit) => {
-            if(prevUnit == 'g') {
-                return 'oz';
-            } else {
-                return 'g';
-            }
-        });
+        quantityCtx.unitChangeHandler('groundsUnit');
     }
 
+    const handleLockedChange = () => {
+        quantityCtx.lockedQuantityHandler('grounds');
+    }
+
+    const isLocked = quantityCtx.locked === 'grounds';
+
     return (
-        <View style={style.quantityContainer}>
-            <QuantityTitle style={style.headingText}>Coffee</QuantityTitle>
-            <View style={style.quantity}>
-                <DecrementButton onPress={decrementQuantity}/>
+        <Card 
+            title="Coffee"
+            incrementQuantity={incrementQuantity}
+            decrementQuantity={decrementQuantity}
+            LargeInputComponent={
                 <QuantityInput
-                    defaultValue={(unit == 'g') ? parseFloat(quantityCtx.grounds.toFixed(1)).toString() : parseFloat((quantityCtx.grounds/28.35).toFixed(1)).toString()}
+                    defaultValue={(quantityCtx.groundsUnit == 'g') ? parseFloat(quantityCtx.grounds.toFixed(1)).toString() : parseFloat((quantityCtx.grounds/28.35).toFixed(1)).toString()}
                     keyboardType={'decimal-pad'}
                     onChangeText={handleQuantityChange}
-                    maxLength={(unit == 'g') ? 5 : 4}
-                    unit={unit}
+                    maxLength={(quantityCtx.groundsUnit == 'g') ? 5 : 4}
+                    style={{color: isLocked ? colors.locked.largeInput : colors.largeInput}}
                 />
-                <IncrementButton onPress={incrementQuantity} />
-            </View>
-            {/* <TouchableOpacity onPress={handleUnitChange}>
-                <Text style={style.unitText}>{(unit == 'g') ? 'grams' : 'ounces'}</Text>
-            </TouchableOpacity> */}
-            <Unit onPress={handleUnitChange} unit={unit} />
-        </View>
+            } 
+            BottomLabelComponent={
+                <Unit onPress={handleUnitChange} unit={quantityCtx.groundsUnit} style={{color: isLocked ? colors.locked.unitPrimary : colors.unitPrimary}} />
+            }
+            locked={isLocked}
+            colors={colors}
+            lockHandler={handleLockedChange}
+        />
     );
 }
 

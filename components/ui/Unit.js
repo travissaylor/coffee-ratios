@@ -11,7 +11,7 @@ const Unit = (props) => {
 
     return (
         <TouchableOpacity onPress={props.onPress}>
-            <Text style={{...style.unitText, ...props.style, color: colors.unitPrimary}}>{(unit == 'g') ? 'grams' : 'ounces'}</Text>
+            <Text style={{...style.unitText, color: colors.unitPrimary, ...props.style}}>{(unit == 'g') ? 'grams' : 'ounces'}</Text>
         </TouchableOpacity>
     );
 }
