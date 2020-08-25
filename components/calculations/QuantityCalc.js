@@ -9,11 +9,12 @@ export class RatioCalcClass {
     }
 
     groundsLocked(newRatio, prevState) {
+        const newWater = newRatio * prevState.grounds
         return {
             ratio: newRatio,
             grounds: prevState.grounds,
-            water: newRatio * prevState.grounds,
-            brewedCoffee: prevState.water - 2 * (prevState.water / newRatio)
+            water: newWater,
+            brewedCoffee: newWater - 2 * prevState.grounds
         }
     }
 
@@ -104,8 +105,8 @@ export class WaterCalcClass {
 
     brewedCoffeeLocked(newWater, prevState) {
         return {
-            ratio: 2 * newWater / (newWater - prevState.brewedCoffee),
-            grounds: (newWater - prevState.brewedCoffee) / 2,
+            ratio: newWater / prevState.grounds,
+            grounds: prevState.grounds,
             water: newWater,
             brewedCoffee: prevState.brewedCoffee
         }
