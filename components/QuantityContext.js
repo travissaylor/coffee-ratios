@@ -35,6 +35,7 @@ class QuantityContextProvider extends React.Component {
         this.lockedQuantityHandler = this.lockedQuantityHandler.bind(this);
         this.unitChangeHandler = this.unitChangeHandler.bind(this);
         this.setStateObject = this.setStateObject.bind(this);
+        this.setDefaultState = this.setDefaultState.bind(this);
     }
 
     componentDidMount() {
@@ -119,7 +120,7 @@ class QuantityContextProvider extends React.Component {
 
     render() {
         return (
-            <QuantityContext.Provider value={{ratio: this.state.ratio, grounds: this.state.grounds, water: this.state.water, brewedCoffee: this.state.brewedCoffee, groundsUnit: this.state.groundsUnit, waterUnit: this.state.waterUnit, brewedCoffeeUnit: this.state.brewedCoffeeUnit, locked: this.state.locked, fullState: this.state, incrementQuantityHandler: this.incrementQuantityHandler, decrementQuantityHandler: this.decrementQuantityHandler, quantityChangeHandler: this.quantityChangeHandler, unitChangeHandler: this.unitChangeHandler, lockedQuantityHandler: this.lockedQuantityHandler, setStateObject: this.setStateObject}} >
+            <QuantityContext.Provider value={{ratio: this.state.ratio, grounds: this.state.grounds, water: this.state.water, brewedCoffee: this.state.brewedCoffee, groundsUnit: this.state.groundsUnit, waterUnit: this.state.waterUnit, brewedCoffeeUnit: this.state.brewedCoffeeUnit, locked: this.state.locked, fullState: this.state, incrementQuantityHandler: this.incrementQuantityHandler, decrementQuantityHandler: this.decrementQuantityHandler, quantityChangeHandler: this.quantityChangeHandler, unitChangeHandler: this.unitChangeHandler, lockedQuantityHandler: this.lockedQuantityHandler, setStateObject: this.setStateObject, setDefaultState: this.setDefaultState}} >
                 {this.props.children}
             </QuantityContext.Provider>
         )

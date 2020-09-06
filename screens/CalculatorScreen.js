@@ -12,6 +12,7 @@ import Timer from '../components/Timer';
 import { ThemeContext }  from '../components/ThemeContext';
 import usePreferences from '../components/hooks/usePreferences';
 import LoadingView from '../components/ui/LoadingView';
+import Reset from '../components/Reset';
 
 const ErrorView = () => (
   <View>
@@ -65,6 +66,10 @@ const CalculatorScreen = (props) => {
             <Brew />
             <View style={styles.brewButton}>
               <Button color={colors.buttonPrimary} title="Open Timer" onPress={updateTimerState} />
+              <Reset color={colors.buttonPrimary} title="Reset Calculator" />
+            </View>
+            <View style={styles.brewButton}>
+              
             </View>
             <Timer visible={isTimerMode} cancelAction={cancelActionHandler}/>
           </QuantityContextProvider>
@@ -84,7 +89,8 @@ const styles = StyleSheet.create({
     paddingVertical: 20
   },
   brewButton: {
-    marginTop: 30
+    marginTop: 30,
+    flexDirection: "row"
   },
 });
 
