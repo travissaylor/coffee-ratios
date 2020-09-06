@@ -3,11 +3,7 @@
     "name": "Coffio",
     "slug": "coffio",
     "privacy": "public",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android"],
     "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/coffio-logo-dark.png",
@@ -19,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 2000
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.travissaylor.coffeeRatios",
       "buildNumber": "2.0.0",
