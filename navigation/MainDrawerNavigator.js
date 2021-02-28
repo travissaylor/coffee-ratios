@@ -8,6 +8,7 @@ import MainStackNavigator from '../navigation/MainStackNavigator';
 import SettingStackNavigator from '../navigation/SettingStackNavigator';
 
 import { ThemeContext } from '../components/ThemeContext';
+import PresetStackNavigator from './PresetStackNavigator';
 
 const MainDrawer = createDrawerNavigator();
 
@@ -50,6 +51,13 @@ const MainDrawerNavigator = () => {
                     component={MainStackNavigator} 
                     options={{
                         headerTitle: 'Calculator',
+                    }}
+                />
+                <MainDrawer.Screen 
+                    name="Presets" 
+                    component={PresetStackNavigator} 
+                    options={{
+                        headerTitle: 'Presets',
                     }}
                 />
                 <MainDrawer.Screen 
