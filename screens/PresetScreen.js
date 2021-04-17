@@ -82,6 +82,7 @@ const PresetScreen = ({navigation}) => {
     }, []);
 
     const passPresetToCalcuator = (preset) => {
+        navigation.push('Calculator', { ...preset });
         navigation.navigate('Calculator', { ...preset });
     }
 
@@ -135,7 +136,7 @@ const PresetScreen = ({navigation}) => {
                                 >
                                     <PresetItem
                                         onPress={() => passPresetToCalcuator(item)}
-                                        style={{ marginHorizontal: 10, backgroundColor: '#fff' }}
+                                        style={{ marginHorizontal: 10, backgroundColor: theme.backgroundColor}}
                                         {...item}
                                     />
                                 </Swipeable>
