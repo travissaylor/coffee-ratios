@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as Font from 'expo-font';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 
 import MainDrawerNavigator from './navigation/MainDrawerNavigator';
 import ThemeContextProvider from './components/ThemeContext';
@@ -15,11 +15,10 @@ export default function App() {
   const [dataLoaded, setDataLoaded] = useState(false);
 
   if (!dataLoaded) {
-    return <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
+    return <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} onError={() => setDataLoaded(false)} />
   }
 
   return (
-    // <MainStackNavigator />
       <ThemeContextProvider>
         <MainDrawerNavigator />
       </ThemeContextProvider>
