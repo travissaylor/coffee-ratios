@@ -17,44 +17,8 @@ import { ThemeContext } from "../components/ThemeContext";
 import QuantityContextProvider from "../components/QuantityContext";
 import HelpQuantity from "../components/HelpQuantity";
 import Swipeable from "react-native-gesture-handler/Swipeable";
-
-const PresetItem = ({
-    name,
-    ratio,
-    grounds,
-    water,
-    brewedCoffee,
-    groundsUnit,
-    waterUnit,
-    brewedCoffeeUnit,
-    locked,
-    style,
-    onPress,
-}) => {
-    const brewUnitConversion = (brew, unit) => {
-        if (unit === "g") {
-            return brew;
-        }
-
-        return brew / 28.35;
-    };
-
-    const convertedBrew = brewUnitConversion(brewedCoffee, brewedCoffeeUnit);
-    return (
-        <TouchableOpacity onPress={onPress}>
-            <Text style={{ ...styles.largeText, ...style, marginBottom: 0 }}>
-                {name}
-            </Text>
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                <Text style={{ ...styles.bodyText, ...style }}>{ratio}:1</Text>
-                <Text style={{ ...styles.bodyText, ...style }}>
-                    {convertedBrew}
-                    {brewedCoffeeUnit}
-                </Text>
-            </View>
-        </TouchableOpacity>
-    );
-};
+import PresetItem from "../components/PresetItem";
+import { StackActions } from "@react-navigation/routers";
 
 const EditAction = () => {
     return (
@@ -68,19 +32,19 @@ const EditAction = () => {
     );
 };
 
-const DeleteAction = () => {
+const DeleteAction = ({item, index, onDelete}) => {
     return (
         <View>
             <Text
-                onPress={() => console.log("Delete")}
-                style={{ ...styles.largeText, marginBottom: 0 }}>
+                onPress={() => onDelete(index)}
+                style={{ ...styles.largeText, marginBottom: 0, backgroundColor: 'green' }}>
                 Delete
             </Text>
         </View>
     );
 };
 
-const PresetScreen = (props) => {
+const PresetScreen = ({navigation}) => {
     const stubData = [
         {
             key: "0",
@@ -117,6 +81,23 @@ const PresetScreen = (props) => {
         setPresetData(stubData);
     }, []);
 
+    const passPresetToCalcuator = (preset) => {
+        navigation.navigate('Calculator', { ...preset });
+    }
+
+    const deleteItemById = (itemIndex) => {
+        setPresetData((prevState) => {
+            prevState.splice(itemIndex, 1);
+            return [
+                ...prevState
+            ];
+        })
+    }
+
+    const editItem = (itemIndex) => {
+
+    }
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <KeyboardAwareScrollView
@@ -146,17 +127,15 @@ const PresetScreen = (props) => {
                     </Text>
                     <View style={styles.moduleContainer}>
                         <FlatList
-                            data={stubData}
-                            renderItem={({ item }) => (
+                            data={presetData}
+                            renderItem={({ item, index }) => (
                                 <Swipeable 
-                                    renderLeftActions={EditAction}
-                                    renderRightActions={DeleteAction}
+                                    renderLeftActions={() => <EditAction item={item} index={index} onEdit={deleteItemById} />}
+                                    renderRightActions={() => <DeleteAction item={item} index={index} onDelete={deleteItemById} />}
                                 >
                                     <PresetItem
-                                        onPress={() =>
-                                            console.log("name: ", item.name)
-                                        }
-                                        style={{ marginHorizontal: 10 }}
+                                        onPress={() => passPresetToCalcuator(item)}
+                                        style={{ marginHorizontal: 10, backgroundColor: '#fff' }}
                                         {...item}
                                     />
                                 </Swipeable>
