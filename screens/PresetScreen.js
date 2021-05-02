@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
     FlatList,
-    ScrollView,
-    TouchableOpacity,
 } from "react-native-gesture-handler";
 import {
     StyleSheet,
@@ -14,17 +12,17 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { ThemeContext } from "../components/ThemeContext";
-import QuantityContextProvider from "../components/QuantityContext";
-import HelpQuantity from "../components/HelpQuantity";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import PresetItem from "../components/PresetItem";
-import { StackActions } from "@react-navigation/routers";
+import PresetModal from "../components/ui/PresetModal";
+import usePreferenceSaver from "../components/hooks/usePreferenceSaver";
+import usePreferences from "../components/hooks/usePreferences";
 
-const EditAction = () => {
+const EditAction = ({item, index, onEdit}) => {
     return (
         <View>
             <Text
-                onPress={() => console.log("Edit")}
+                onPress={() => onEdit(item, index)}
                 style={{ ...styles.largeText, marginBottom: 0 }}>
                 Edit
             </Text>
@@ -32,20 +30,24 @@ const EditAction = () => {
     );
 };
 
-const DeleteAction = ({item, index, onDelete}) => {
+const DeleteAction = ({ item, index, onDelete }) => {
     return (
         <View>
             <Text
                 onPress={() => onDelete(index)}
-                style={{ ...styles.largeText, marginBottom: 0, backgroundColor: 'green' }}>
+                style={{
+                    ...styles.largeText,
+                    marginBottom: 0,
+                    backgroundColor: "green",
+                }}>
                 Delete
             </Text>
         </View>
     );
 };
 
-const PresetScreen = ({navigation}) => {
-    const stubData = [
+const PresetScreen = ({ navigation }) => {
+    const initialPresets = [
         {
             key: "0",
             name: "Single Aeropress",
@@ -75,29 +77,59 @@ const PresetScreen = ({navigation}) => {
     const ThemeCtx = useContext(ThemeContext);
     const { colors, theme } = ThemeCtx;
 
-    const [presetData, setPresetData] = useState([]);
+    const preferenceSaver = usePreferenceSaver();
+    const defaultPresets = usePreferences("@Coffio_preset_items");
+
+    const [presetData, setPresetData] = useState();
+    const [currentPreset, setCurrentPreset] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const swipeRef = useRef(null);
 
     useEffect(() => {
-        setPresetData(stubData);
-    }, []);
+        if (defaultPresets.preferences) {
+            const parsedPresets = JSON.parse(defaultPresets.preferences);
+            setPresetData(parsedPresets.length !== 0 ? parsedPresets : initialPresets);
+        }
+    }, [defaultPresets.preferences]);
 
+    // @todo fix navigate bug
     const passPresetToCalcuator = (preset) => {
-        navigation.push('Calculator', { ...preset });
-        navigation.navigate('Calculator', { ...preset });
-    }
+        navigation.push("Calculator", { ...preset });
+        navigation.navigate("Calculator", { ...preset });
+    };
 
-    const deleteItemById = (itemIndex) => {
+    const deleteItemByIndex = (itemIndex) => {
         setPresetData((prevState) => {
             prevState.splice(itemIndex, 1);
-            return [
-                ...prevState
-            ];
-        })
-    }
+            return [...prevState];
+        });
+        preferenceSaver.saveSingleItem("@Coffio_preset_items", JSON.stringify(presetData));
+    };
 
-    const editItem = (itemIndex) => {
+    const editItem = (item, itemIndex) => {
+        setCurrentPreset(itemIndex);
+        setIsModalOpen(true);
+    };
 
-    }
+    const saveHandler = (item, itemIndex = null) => {
+        if (itemIndex === null) {
+            setPresetData((prevState) => [
+                ...prevState,
+                item
+            ]);
+        } else {
+            setPresetData((prevState) => {
+                prevState[itemIndex] = item
+                return [
+                    ...prevState
+                ]
+            });
+        }
+
+        setIsModalOpen(false);
+        preferenceSaver.saveSingleItem("@Coffio_preset_items", JSON.stringify(presetData));
+    };
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -127,22 +159,47 @@ const PresetScreen = ({navigation}) => {
                         can get your coffee even faster.
                     </Text>
                     <View style={styles.moduleContainer}>
-                        <FlatList
-                            data={presetData}
-                            renderItem={({ item, index }) => (
-                                <Swipeable 
-                                    renderLeftActions={() => <EditAction item={item} index={index} onEdit={deleteItemById} />}
-                                    renderRightActions={() => <DeleteAction item={item} index={index} onDelete={deleteItemById} />}
-                                >
-                                    <PresetItem
-                                        onPress={() => passPresetToCalcuator(item)}
-                                        style={{ marginHorizontal: 10, backgroundColor: theme.backgroundColor}}
-                                        {...item}
-                                    />
-                                </Swipeable>
-                            )}
-                        />
+                        {presetData && 
+                            <FlatList
+                                data={presetData}
+                                renderItem={({ item, index }) => (
+                                    <Swipeable
+                                        ref={swipeRef}
+                                        renderLeftActions={() => (
+                                            <EditAction
+                                                item={item}
+                                                index={index}
+                                                closeHandler={() => setIsModalOpen(false)}
+                                                saveHandler={saveHandler}
+                                                onEdit={() => editItem(item, index)}
+                                            />
+                                        )}
+                                        renderRightActions={() => (
+                                            <DeleteAction
+                                                item={item}
+                                                index={index}
+                                                onDelete={deleteItemByIndex}
+                                            />
+                                        )}
+                                    >
+                                        <PresetItem
+                                            onPress={() =>
+                                                passPresetToCalcuator(item)
+                                            }
+                                            style={{
+                                                marginHorizontal: 10,
+                                                backgroundColor:
+                                                    theme.backgroundColor,
+                                            }}
+                                            {...item}
+                                        />
+                                    </Swipeable>
+                                )}
+                            />
+                        
+                        }
                     </View>
+                    <PresetModal isOpen={isModalOpen} intialValues={presetData ? presetData[currentPreset] : null} index={currentPreset} success={preferenceSaver.success} error={preferenceSaver.error} saving={preferenceSaver.saving} closeHandler={() => setIsModalOpen(false)} saveHandler={saveHandler} />
                 </View>
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>
