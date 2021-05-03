@@ -8,6 +8,7 @@ import {
     Text,
     TouchableWithoutFeedback,
     Keyboard,
+    Button,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -112,6 +113,11 @@ const PresetScreen = ({ navigation }) => {
         setIsModalOpen(true);
     };
 
+    const addItem = () => {
+        setCurrentPreset(null);
+        setIsModalOpen(true);
+    }
+
     const saveHandler = (item, itemIndex = null) => {
         if (itemIndex === null) {
             setPresetData((prevState) => [
@@ -158,6 +164,7 @@ const PresetScreen = ({ navigation }) => {
                         Easily create and choose preset brew values so that you
                         can get your coffee even faster.
                     </Text>
+                    <Button title="Add New Preset" onPress={addItem} />
                     <View style={styles.moduleContainer}>
                         {presetData && 
                             <FlatList
@@ -199,7 +206,7 @@ const PresetScreen = ({ navigation }) => {
                         
                         }
                     </View>
-                    <PresetModal isOpen={isModalOpen} intialValues={presetData ? presetData[currentPreset] : null} index={currentPreset} success={preferenceSaver.success} error={preferenceSaver.error} saving={preferenceSaver.saving} closeHandler={() => setIsModalOpen(false)} saveHandler={saveHandler} />
+                    <PresetModal isOpen={isModalOpen} initialValues={presetData ? presetData[currentPreset] : null} index={currentPreset} success={preferenceSaver.success} error={preferenceSaver.error} saving={preferenceSaver.saving} closeHandler={() => setIsModalOpen(false)} saveHandler={saveHandler} />
                 </View>
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>

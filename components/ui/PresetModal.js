@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Modal, StyleSheet, Text, View } from "react-native";
+import { Button, Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import Brew from "../Brew";
 import Coffee from "../Coffee";
 import QuantityContextProvider from "../QuantityContext";
@@ -8,10 +8,23 @@ import Water from "../Water";
 import { ThemeContext } from "../ThemeContext";
 import PresetSaveHandler from "../PresetSaveHandler";
 import { useEffect, useState } from "react/cjs/react.development";
-const PresetModal = ({ isOpen, index, saving, success, error, closeHandler, saveHandler, intialValues }) => {
+const PresetModal = ({ isOpen, index, saving, success, error, closeHandler, saveHandler, initialValues }) => {
     const ThemeCtx = useContext(ThemeContext);
     const { colors, theme } = ThemeCtx;
-    
+    const [name, setName] = useState();
+
+    useEffect(() => {
+        if (initialValues && initialValues.name) {
+            setName(initialValues.name);
+        } else {
+            setName("");
+        }
+    }, [initialValues]);
+
+    const updateName = (newText) => {
+        setName(newText);
+    }
+
     return (
         <View style={styles.container}>
             <Modal
@@ -30,14 +43,15 @@ const PresetModal = ({ isOpen, index, saving, success, error, closeHandler, save
                         />
                     </View>
                     <View style={styles.contentContainer}>
+                        <TextInput value={name} onChangeText={updateName} />
                         <QuantityContextProvider
-                            defaultState={intialValues}
+                            defaultState={initialValues}
                         >
                             <Ratio />
                             <Coffee />
                             <Water />
                             <Brew />
-                            <PresetSaveHandler saveHandler={saveHandler} value={intialValues} index={index} saving={saving} success={success} error={error} />
+                            <PresetSaveHandler saveHandler={saveHandler} value={{...initialValues, name: name}} index={index} saving={saving} success={success} error={error} />
                         </QuantityContextProvider>
                     </View>
                 </View>

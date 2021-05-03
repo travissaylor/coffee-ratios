@@ -23,8 +23,6 @@ const PresetSaveHandler = ({ saveHandler, value, saving, success, error, index }
     }
 
     const onSave = () => {
-        console.log('value', value);
-        console.log('index', index);
         saveHandler({...value, ...quantityCtx.fullState}, index)
     }
 
