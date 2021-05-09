@@ -89,7 +89,7 @@ const PresetScreen = ({ navigation }) => {
         {
             key: "2",
             name: "Tap to Use",
-            ratio: 17,
+            ratio: 16,
             grounds: 32.4,
             water: 483.8,
             brewedCoffee: 453.6,
