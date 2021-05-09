@@ -8,7 +8,7 @@
       "android",
       "web"
     ],
-    "version": "2.0.0",
+    "version": "2.1.0",
     "orientation": "portrait",
     "icon": "./assets/coffio-logo-dark.png",
     "splash": {
@@ -24,12 +24,12 @@
     ],
     "ios": {
       "bundleIdentifier": "com.travissaylor.coffeeRatios",
-      "buildNumber": "2.0.0",
+      "buildNumber": "2.1.0",
       "supportsTablet": true
     },
     "android": {
       "package": "com.travissaylor.coffeeRatios",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/coffio-logo-dark-transparent.png",
         "backgroundColor": "#252a34"
