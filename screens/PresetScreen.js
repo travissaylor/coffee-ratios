@@ -1,16 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FlatList } from "react-native-gesture-handler";
-import {
-    StyleSheet,
-    View,
-    Text,
-    TouchableWithoutFeedback,
-    Keyboard,
-    Button,
-    TouchableOpacity,
-    ScrollView,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import { ThemeContext } from "../components/ThemeContext";
@@ -166,8 +156,7 @@ const PresetScreen = ({ navigation }) => {
             style={{
                 ...styles.container,
                 backgroundColor: colors.screenBackground,
-            }}
-        >
+            }}>
             <View>
                 <Text
                     style={{
@@ -181,8 +170,8 @@ const PresetScreen = ({ navigation }) => {
                         ...styles.bodyText,
                         color: colors.unitPrimary,
                     }}>
-                    Easily create and choose preset brew values so that you
-                    can get your coffee even faster.
+                    Easily create and choose preset brew values so that you can
+                    get your coffee even faster.
                 </Text>
                 <View style={styles.buttonContainer}>
                     <Button
@@ -200,9 +189,7 @@ const PresetScreen = ({ navigation }) => {
                                     <EditAction
                                         item={item}
                                         index={index}
-                                        onEdit={() =>
-                                            editItem(item, index)
-                                        }
+                                        onEdit={() => editItem(item, index)}
                                         colors={colors}
                                     />
                                 )}
@@ -215,9 +202,7 @@ const PresetScreen = ({ navigation }) => {
                                     />
                                 )}>
                                 <PresetItem
-                                    onPress={() =>
-                                        passPresetToCalcuator(item)
-                                    }
+                                    onPress={() => passPresetToCalcuator(item)}
                                     style={{
                                         marginHorizontal: 10,
                                         backgroundColor:
@@ -254,7 +239,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
     },
     moduleContainer: {
-        marginBottom: '150%',
+        marginBottom: "150%",
         alignItems: "stretch",
         justifyContent: "center",
     },
@@ -272,8 +257,8 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginVertical: 10,
-        alignSelf: 'center'
-    }
+        alignSelf: "center",
+    },
 });
 
 export default PresetScreen;

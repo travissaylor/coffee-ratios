@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { colors } from '../constants/colors';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 const PresetItem = ({
     name,
     ratio,
@@ -25,11 +25,24 @@ const PresetItem = ({
 
     const convertedBrew = brewUnitConversion(brewedCoffee, brewedCoffeeUnit);
     return (
-        <TouchableOpacity onPress={onPress} style={{...style, backgroundColor: style.backgroundColor}}>
-            <Text style={{ ...styles.largeText, ...style, marginBottom: 0, marginHorizontal: 10 }}>
+        <TouchableOpacity
+            onPress={onPress}
+            style={{ ...style, backgroundColor: style.backgroundColor }}>
+            <Text
+                style={{
+                    ...styles.largeText,
+                    ...style,
+                    marginBottom: 0,
+                    marginHorizontal: 10,
+                }}>
                 {name}
             </Text>
-            <View style={{ flexDirection: "row", justifyContent: "center", ...style }}>
+            <View
+                style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    ...style,
+                }}>
                 <Text style={{ ...styles.bodyText, ...style }}>{ratio}:1</Text>
                 <Text style={{ ...styles.bodyText, ...style }}>
                     {convertedBrew}

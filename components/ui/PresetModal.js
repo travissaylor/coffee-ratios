@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Button, Modal, StyleSheet, Text, TextInput, View, ActivityIndicator } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Modal, StyleSheet, TextInput, View } from "react-native";
 import Brew from "../Brew";
 import Coffee from "../Coffee";
 import QuantityContextProvider from "../QuantityContext";
@@ -7,9 +7,18 @@ import Ratio from "../Ratio";
 import Water from "../Water";
 import { ThemeContext } from "../ThemeContext";
 import PresetSaveHandler from "../PresetSaveHandler";
-import { useEffect, useState } from "react/cjs/react.development";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-const PresetModal = ({ isOpen, index, saving, success, error, closeHandler, saveHandler, initialValues }) => {
+
+const PresetModal = ({
+    isOpen,
+    index,
+    saving,
+    success,
+    error,
+    closeHandler,
+    saveHandler,
+    initialValues,
+}) => {
     const ThemeCtx = useContext(ThemeContext);
     const { colors, theme } = ThemeCtx;
     const [name, setName] = useState(undefined);
@@ -25,48 +34,75 @@ const PresetModal = ({ isOpen, index, saving, success, error, closeHandler, save
 
     const updateName = (newText) => {
         setName(newText);
-    }
+    };
 
     const onSave = (item, itemIndex = null) => {
         if (!item.name || item.name.length === 0) {
             setModalError("You must enter a title");
             setTimeout(() => {
                 setModalError(false);
-            }, 3000)
+            }, 3000);
             return;
         }
         saveHandler(item, itemIndex);
         setName(undefined);
-    }
+    };
 
     return (
-        <View style={{...styles.container, backgroundColor: colors.screenBackground}}>
+        <View
+            style={{
+                ...styles.container,
+                backgroundColor: colors.screenBackground,
+            }}>
             <Modal
                 animationType="slide"
                 visible={isOpen}
-                presentationStyle="pageSheet"
-            >
-                <View style={{flexDirection: "column", backgroundColor: colors.screenBackground}}>
+                presentationStyle="pageSheet">
+                <View
+                    style={{
+                        flexDirection: "column",
+                        backgroundColor: colors.screenBackground,
+                    }}>
                     <View style={styles.buttonContainer}>
-                        <Button 
+                        <Button
                             onPress={closeHandler}
                             title="&#10005;"
                             color={colors.unitPrimary}
                             accessibilityLabel="Close the Preset Modal"
                         />
                     </View>
-                    <KeyboardAwareScrollView contentContainerStyle={styles.contentContainer}>
-                        <View style={{...styles.textInputContainer, borderBottomColor: colors.unitPrimary, borderBottomWidth: 1}}>
-                            <TextInput placeholder="Preset Name" value={name} style={{...styles.textInput, color: colors.unitPrimary}} onChangeText={updateName} />
+                    <KeyboardAwareScrollView
+                        contentContainerStyle={styles.contentContainer}>
+                        <View
+                            style={{
+                                ...styles.textInputContainer,
+                                borderBottomColor: colors.unitPrimary,
+                                borderBottomWidth: 1,
+                            }}>
+                            <TextInput
+                                placeholder="Preset Name"
+                                value={name}
+                                style={{
+                                    ...styles.textInput,
+                                    color: colors.unitPrimary,
+                                }}
+                                onChangeText={updateName}
+                            />
                         </View>
-                        <QuantityContextProvider
-                            defaultState={initialValues}
-                        >
+                        <QuantityContextProvider defaultState={initialValues}>
                             <Ratio />
                             <Coffee />
                             <Water />
                             <Brew />
-                            <PresetSaveHandler saveHandler={onSave} nonQuantityValues={{name: name}} index={index} saving={saving} success={success} error={error} modalError={modalError} />
+                            <PresetSaveHandler
+                                saveHandler={onSave}
+                                nonQuantityValues={{ name: name }}
+                                index={index}
+                                saving={saving}
+                                success={success}
+                                error={error}
+                                modalError={modalError}
+                            />
                         </QuantityContextProvider>
                     </KeyboardAwareScrollView>
                 </View>
@@ -77,8 +113,7 @@ const PresetModal = ({ isOpen, index, saving, success, error, closeHandler, save
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
-        // marginBottom: 50,
+
     },
     largeText: {
         fontSize: 30,
@@ -104,13 +139,13 @@ const styles = StyleSheet.create({
     textInputContainer: {
         marginHorizontal: 10,
         marginVertical: 30,
-        width: '80%',
+        width: "80%",
     },
     textInput: {
         fontSize: 30,
         textAlign: "center",
         fontFamily: "montserrat-light",
-    }
+    },
 });
 
 export default PresetModal;
