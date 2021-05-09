@@ -5,7 +5,7 @@ import { QuantityContext } from "../components/QuantityContext"
 import usePreferenceSaver from "./hooks/usePreferenceSaver";
 import { ThemeContext } from "./ThemeContext";
 
-const PresetSaveHandler = ({ saveHandler, value, saving, success, error, index }) => {
+const PresetSaveHandler = ({ saveHandler, nonQuantityValues, saving, success, error, modalError, index }) => {
     const quantityCtx = useContext(QuantityContext);
     const themeCtx = useContext(ThemeContext);
     const { colors } = themeCtx;
@@ -18,12 +18,12 @@ const PresetSaveHandler = ({ saveHandler, value, saving, success, error, index }
         buttonTitle = "Save Successful";
     }
 
-    if(error) {
+    if(error || modalError) {
         buttonTitle = "Error Saving Preferences";
     }
 
     const onSave = () => {
-        saveHandler({...value, ...quantityCtx.fullState}, index)
+        saveHandler({...quantityCtx.fullState, ...nonQuantityValues}, index);
     }
 
     return (
@@ -34,10 +34,13 @@ const PresetSaveHandler = ({ saveHandler, value, saving, success, error, index }
 
             <View style={{paddingHorizontal: 30, marginTop: 10}}>
                 { success &&
-                    <Text style={{color: color, textAlign: 'center'}}>You will see your changes the next time you reload the app.</Text>
+                    <Text style={{color: color, textAlign: 'center'}}>Your Changes Have been Saved Succesfully</Text>
                 }
-                { error &&
+                { error && !modalError &&
                     <Text style={{color: color, textAlign: 'center'}}>There was a problem saving your preferences. Please try again.</Text>
+                }
+                { modalError &&
+                    <Text style={{color: color, textAlign: 'center'}}>{modalError}</Text>
                 }
                 <ActivityIndicator animating={saving} color={colors.buttonPrimary} size="large" />
             </View>

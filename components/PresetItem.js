@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { colors } from '../constants/colors';
 const PresetItem = ({
     name,
     ratio,
@@ -16,19 +17,19 @@ const PresetItem = ({
 }) => {
     const brewUnitConversion = (brew, unit) => {
         if (unit === "g") {
-            return brew;
+            return brew.toFixed(1);
         }
 
-        return brew / 28.35;
+        return (brew / 28.35).toFixed(1);
     };
 
     const convertedBrew = brewUnitConversion(brewedCoffee, brewedCoffeeUnit);
     return (
-        <TouchableOpacity onPress={onPress}>
-            <Text style={{ ...styles.largeText, ...style, marginBottom: 0 }}>
+        <TouchableOpacity onPress={onPress} style={{...style, backgroundColor: style.backgroundColor}}>
+            <Text style={{ ...styles.largeText, ...style, marginBottom: 0, marginHorizontal: 10 }}>
                 {name}
             </Text>
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <View style={{ flexDirection: "row", justifyContent: "center", ...style }}>
                 <Text style={{ ...styles.bodyText, ...style }}>{ratio}:1</Text>
                 <Text style={{ ...styles.bodyText, ...style }}>
                     {convertedBrew}
@@ -40,17 +41,6 @@ const PresetItem = ({
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexGrow: 1,
-        alignItems: "center",
-        justifyContent: "flex-start",
-        paddingVertical: 20,
-    },
-    moduleContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-        paddingBottom: 20,
-    },
     largeText: {
         fontSize: 30,
         textAlign: "center",

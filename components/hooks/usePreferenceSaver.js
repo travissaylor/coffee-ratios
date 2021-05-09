@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import AsyncStorage from "@react-native-community/async-storage"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const usePreferenceSaver = () => {
     const [success, setSuccess] = useState(false);
@@ -15,6 +15,7 @@ const usePreferenceSaver = () => {
         setTimeout(() => {
             setSuccess(false);
         }, 5000);
+
     }
 
     const errorHandler = () => {
@@ -35,8 +36,10 @@ const usePreferenceSaver = () => {
             const jsonValue = JSON.stringify(value)
             await AsyncStorage.setItem(storageKey, jsonValue)
             successHandler();
+            return true;
         } catch (e) {
             errorHandler();
+            return false;
         }
     }
 
