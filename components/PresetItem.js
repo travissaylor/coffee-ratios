@@ -43,7 +43,7 @@ const PresetItem = ({
                     justifyContent: "center",
                     ...style,
                 }}>
-                <Text style={{ ...styles.bodyText, ...style }}>{ratio}:1</Text>
+                <Text style={{ ...styles.bodyText, ...style }}>{ratio.toFixed(1)}:1</Text>
                 <Text style={{ ...styles.bodyText, ...style }}>
                     {convertedBrew}
                     {brewedCoffeeUnit}
