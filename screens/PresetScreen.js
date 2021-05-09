@@ -64,7 +64,7 @@ const PresetScreen = ({ navigation }) => {
     const initialPresets = [
         {
             key: "0",
-            name: "Single Aeropress",
+            name: "Swipe Left to Edit",
             ratio: 16,
             grounds: 16.2,
             water: 241.9,
@@ -76,8 +76,20 @@ const PresetScreen = ({ navigation }) => {
         },
         {
             key: "1",
-            name: "Chemex for 2",
+            name: "Swipe Right to Delete",
             ratio: 16,
+            grounds: 32.4,
+            water: 483.8,
+            brewedCoffee: 453.6,
+            groundsUnit: "g",
+            waterUnit: "g",
+            brewedCoffeeUnit: "oz",
+            locked: "brew",
+        },
+        {
+            key: "2",
+            name: "Tap to Use",
+            ratio: 17,
             grounds: 32.4,
             water: 483.8,
             brewedCoffee: 453.6,
