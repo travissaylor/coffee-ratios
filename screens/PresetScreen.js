@@ -116,6 +116,8 @@ const PresetScreen = ({ navigation }) => {
             setPresetData(
                 parsedPresets.length !== 0 ? parsedPresets : initialPresets
             );
+        } else {
+            setPresetData(initialPresets);
         }
     }, [defaultPresets.preferences]);
 
